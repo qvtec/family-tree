@@ -3,6 +3,11 @@ SAIL=./vendor/bin/sail
 
 install:
 	@make up
+	docker compose exec app composer install
+	docker compose exec app cp .env.example .env
+	docker compose exec app php artisan key:generate
+	docker compose exec app php artisan storage:link
+	docker compose exec app chmod -R 777 storage bootstrap/cache
 	@make migrate
 	@run-install
 	@run-build
@@ -12,6 +17,8 @@ up:
 	$(SAIL) up -d
 stop:
 	$(SAIL) stop
+down:
+	$(SAIL) down --remove-orphans
 ps:
 	$(SAIL) ps
 
@@ -19,7 +26,7 @@ ps:
 logs:
 	$(SAIL) logs
 logs-watch:
-	docker compose logs --follow
+	$(SAIL) logs --follow
 
 # Docker container ////////////////////////////////////////////////////////////////////////////
 web:
