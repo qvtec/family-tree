@@ -1,16 +1,14 @@
-include .env
 SAIL=./vendor/bin/sail
 
 install:
+	./bin/setup_sail.sh
 	@make up
-	docker compose exec app composer install
-	docker compose exec app cp .env.example .env
-	docker compose exec app php artisan key:generate
-	docker compose exec app php artisan storage:link
-	docker compose exec app chmod -R 777 storage bootstrap/cache
-	@make migrate
-	@run-install
-	@run-build
+	$(SAIL) composer install
+	$(SAIL) artisan key:generate
+	$(SAIL) artisan storage:link
+	@make fresh
+	@make run-install
+	@make run-build
 
 # Docker ////////////////////////////////////////////////////////////////////////////
 up:
@@ -19,6 +17,10 @@ stop:
 	$(SAIL) stop
 down:
 	$(SAIL) down --remove-orphans
+destroy:
+	$(SAIL) down --rmi all --volumes --remove-orphans
+restart:
+	$(SAIL) restart
 ps:
 	$(SAIL) ps
 
@@ -29,12 +31,10 @@ logs-watch:
 	$(SAIL) logs --follow
 
 # Docker container ////////////////////////////////////////////////////////////////////////////
-web:
+laravel:
 	$(SAIL) exec laravel.test bash
 db:
 	$(SAIL) exec mysql bash
-sql:
-	$(SAIL) exec mysql bash -c 'mysql -u $(DB_USERNAME) -p$(DB_PASSWORD) $(DB_DATABASE)'
 
 # Front ////////////////////////////////////////////////////////////////////////////
 run:
@@ -46,17 +46,23 @@ run-build:
 
 # DB ////////////////////////////////////////////////////////////////////////////
 migrate:
-	$(SAIL) exec laravel.test php artisan migrate
+	$(SAIL) artisan migrate
 migrate-rollback:
-	$(SAIL) exec laravel.test php artisan migrate:rollback
+	$(SAIL) artisan migrate:rollback
 fresh:
-	$(SAIL) exec laravel.test php artisan migrate:fresh --seed
+	$(SAIL) artisan migrate:fresh --seed
 seed:
-	$(SAIL) exec laravel.test php artisan db:seed
+	$(SAIL) artisan db:seed
 tinker:
-	$(SAIL) exec laravel.test php artisan tinker
+	$(SAIL) tinker
+sql:
+	$(SAIL) mysql
+
+# TEST ////////////////////////////////////////////////////////////////////////////
 test:
-	$(SAIL) exec laravel.test php artisan test
+	$(SAIL) test
+test-coverage:
+	$(SAIL) test --coverage
 
 # Laravel create file ////////////////////////////////////////////////////////////////////////////
 # make create-mcr name=User
