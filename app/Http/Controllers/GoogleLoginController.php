@@ -25,9 +25,12 @@ class GoogleLoginController extends Controller
                 'name' => $socialiteUser->name,
             ]);
 
-            Auth::login($user);
-
-            return redirect()->intended('dashboard');
+            if ($user->role) {
+                Auth::login($user);
+                return redirect()->intended('dashboard');
+            } else {
+                return redirect()->back()->with('error', 'ログインできません。');
+            }
         } catch (Exception $e) {
             Log::error($e);
             throw $e;
