@@ -4,7 +4,7 @@ export default function Login({ status }: { status: string }) {
     return (
         <div className="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
             <div className="w-full sm:max-w-md mt-6 px-6 py-8 bg-white shadow-md overflow-hidden sm:rounded-lg">
-                <Head title="Log in" />
+                <Head title="Login" />
 
                 <Link href="/">
                     <svg xmlns="http://www.w3.org/2000/svg" className="mx-auto my-2 w-20 h-20 fill-current text-gray-500" height="48" viewBox="0 -960 960 960" width="48" fill="#0e7490">
@@ -17,7 +17,7 @@ export default function Login({ status }: { status: string }) {
                         <img src="https://developers.google.com/identity/images/btn_google_signin_dark_normal_web.png" className="ml-2" />
                     </a>
                 </div>
-                {status == 'authenticated' && <div className="text-gray-500 text-center mt-4">管理者の承認をお待ちください</div>}
+                {status == 'pending' && <div className="text-gray-500 text-center mt-4">管理者の承認をお待ちください</div>}
             </div>
         </div>
     );
