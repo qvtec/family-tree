@@ -42,7 +42,7 @@ class GoogleLoginController extends Controller
                 Auth::login($user);
                 return redirect()->intended(RouteServiceProvider::HOME);
             } else {
-                return redirect()->back()->with('status', 'authenticated');
+                return redirect('/login')->with('status', 'authenticated');
             }
         } catch (Exception $e) {
             Log::error($e);
