@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -18,29 +17,16 @@ use App\Http\Controllers\FamilyController;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [GoogleLoginController::class, 'login'])->name('login');
+    Route::get('/auth/google', [GoogleLoginController::class, 'redirectToGoogle'])->name('google.login');
+    Route::get('/auth/google/callback', [GoogleLoginController::class, 'handleGoogleCallback'])->name('google.callback');
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-
-Route::get('/auth/google', [GoogleLoginController::class, 'redirectToGoogle'])->name('login.google');
-Route::get('/auth/google/callback', [GoogleLoginController::class, 'handleGoogleCallback'])->name('login.google.callback');
-
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/', function () {
+        return Inertia::render('Home');
+    })->middleware(['auth', 'verified'])->name('home');
 
     Route::get('/tree', [FamilyController::class, 'index'])->name('tree');
 });
-
-require __DIR__.'/auth.php';
