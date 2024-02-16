@@ -4,12 +4,25 @@ namespace App\Http\Controllers;
 
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Auth;
 use Exception;
 use Illuminate\Support\Facades\Log;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class GoogleLoginController extends Controller
 {
+    /**
+     * Display the login view.
+     */
+    public function login(): Response
+    {
+        return Inertia::render('Auth/Login', [
+            'status' => session('status'),
+        ]);
+    }
+
     public function redirectToGoogle()
     {
         return Socialite::driver('google')->redirect();
@@ -27,9 +40,9 @@ class GoogleLoginController extends Controller
 
             if ($user->role) {
                 Auth::login($user);
-                return redirect()->intended('dashboard');
+                return redirect()->intended(RouteServiceProvider::HOME);
             } else {
-                return redirect()->back()->with('error', 'ログインできません。');
+                return redirect()->back()->with('status', 'authenticated');
             }
         } catch (Exception $e) {
             Log::error($e);
