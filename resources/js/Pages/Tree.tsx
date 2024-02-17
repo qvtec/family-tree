@@ -8,7 +8,7 @@ import { post, get } from '@/utils/api'
 import TreeComponents from '@/Components/Features/Tree/Tree'
 import TreeDetailComponents from '@/Components/Features/Tree/Detail'
 
-export default function Tree({ auth, roots, type, tid }: PageProps<{ roots: number[], type: string, tid?: number }>) {
+export default function Tree({ auth, roots, type, id }: PageProps<{ roots: number[], type: string, id?: number }>) {
     const isAdmin = useAdmin(auth.user)
 
     const [data, setData] = useState<Family[]>([])
@@ -47,7 +47,7 @@ export default function Tree({ auth, roots, type, tid }: PageProps<{ roots: numb
         <Layout user={auth.user} title="Family Tree">
             {loading && <Loading />}
             { showDetailId && <TreeDetailComponents id={showDetailId} type={type} />}
-            { !showDetailId && data.length > 0 && <TreeComponents id={tid} type={type} roots={roots} data={data} onClickDetail={onClickDetail} updateNode={updateNode} /> }
+            { !showDetailId && data.length > 0 && <TreeComponents id={id} type={type} roots={roots} data={data} onClickDetail={onClickDetail} updateNode={updateNode} /> }
         </Layout>
     );
 }

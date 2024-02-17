@@ -15,12 +15,12 @@ class FamilyController extends Controller
      */
     public function index(Request $request, string $type)
     {
-        $tid = $request->query('tid');
+        $id = $request->query('id');
         $familyType = FamilyTypesRepository::search($type);
         return Inertia::render('Tree', [
             'roots' => $familyType['roots'],
             'type' => $type,
-            'tid' => $tid,
+            'id' => $id,
         ]);
     }
 

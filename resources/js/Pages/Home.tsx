@@ -13,7 +13,7 @@ export default function Home({ auth }: PageProps) {
 
     const privateMenu = [
       { name: '親族', href: '/admin/tree/family' },
-      { name: '全員', href: `/tree/all?tid=006` },
+      { name: '全員', href: `/tree/all?id=6` },
     ]
 
     return (
