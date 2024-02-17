@@ -28,6 +28,18 @@ export async function post<T>(
   return await api<T>(url, { method: 'POST', body }, toastOptions)
 }
 
+export async function put<T>(
+  url: string,
+  body: any,
+  toastOptions: ToastOptions = {
+    isShow: true,
+    successMessage: '完了しました',
+    errorMessage: 'エラーが発生しました',
+  },
+): Promise<T | undefined> {
+  return await api<T>(url, { method: 'PUT', body }, toastOptions)
+}
+
 export async function remove<T>(
   url: string,
   toastOptions: ToastOptions = {

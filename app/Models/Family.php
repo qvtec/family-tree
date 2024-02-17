@@ -9,6 +9,25 @@ class Family extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'types',
+        'fid',
+        'mid',
+        'pids',
+        'name',
+        'yomi',
+        'en',
+        'gender',
+        'birth',
+        'birthFixed',
+        'death',
+        'deathFixed',
+        'relation',
+        'memo',
+        'tags',
+        'contents',
+    ];
+
     protected $casts = [
         'types' => 'array',
         'pids' => 'array',

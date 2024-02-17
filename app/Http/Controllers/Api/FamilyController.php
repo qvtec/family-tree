@@ -20,9 +20,11 @@ class FamilyController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, string $type, int $id)
+    public function store(Request $request, string $type)
     {
-        //
+        $family = $request->all();
+        $data = FamilyRepository::store($family);
+        return response()->json($data, 201);
     }
 
     /**
@@ -34,22 +36,49 @@ class FamilyController extends Controller
         if (!$data || !in_array($type, $data->types)) {
             return [];
         }
-        return $data;
+        return response()->json($data);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, int $id)
+    public function update(Request $request, string $type, int $id)
     {
-        //
+        $family = $request->all();
+        $data = FamilyRepository::update($family, $id);
+        return response()->json($data);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int $id)
+    public function destroy(string $type, int $id)
     {
-        //
+        FamilyRepository::delete($id);
+        return response()->json(null, 204);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function nodeUpdate(Request $request, string $type)
+    {
+        $addNodesData = $request->input('addNodesData');
+        $removeNodeId = $request->input('removeNodeId');
+        $updateNodesData = $request->input('updateNodesData');
+        if (!empty($addNodesData)) {
+            foreach($addNodesData as $add) {
+                FamilyRepository::store($add);
+            }
+        }
+        if (!empty($updateNodesData)) {
+            foreach($updateNodesData as $update) {
+                FamilyRepository::update($update, $update['id']);
+            }
+        }
+        if (!empty($removeNodeId)) {
+            FamilyRepository::delete($removeNodeId);
+        }
+        return response()->json();
     }
 }

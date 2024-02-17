@@ -25,9 +25,6 @@ export default function Tree({ auth, roots, type, tid }: PageProps<{ roots: numb
     }, [])
 
     function onClickDetail(id: number) {
-        // router.push(`/tree/${type}/${tid}`)
-        console.log('detail push')
-        console.log(route('tree.show', {type: type, id: id}))
         setShowDetailId(id)
     }
 
@@ -43,7 +40,7 @@ export default function Tree({ auth, roots, type, tid }: PageProps<{ roots: numb
             return
         }
 
-        // await post(`/api/tree/${type}`, args)
+        await post(route('tree.node.update', type), args)
     }
 
     return (

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\FamilyController;
+use App\Http\Controllers\Api\ImageUploadController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +26,14 @@ Route::middleware('auth:sanctum')->group(function () {
         return $request->user();
     });
 
-    Route::get('/tree/{type}', [FamilyController::class, 'index'])->name('tree');
-    Route::get('/tree/{type}/{id}', [FamilyController::class, 'show'])->name('tree.show');
+    Route::prefix('tree/{type}')->name('tree.')->group(function() {
+        Route::get('/', [FamilyController::class, 'index'])->name('index');
+        Route::post('/', [FamilyController::class, 'store'])->name('store');
+        Route::get('/{id}', [FamilyController::class, 'show'])->name('show');
+        Route::put('/{id}', [FamilyController::class, 'update'])->name('update');
+        Route::delete('/{id}', [FamilyController::class, 'destroy'])->name('destroy');
+        Route::post('/node/update', [FamilyController::class, 'nodeUpdate'])->name('node.update');
+    });
+
+    Route::post('/upload-image', [ImageUploadController::class, 'upload'])->name('upload.image');
 });

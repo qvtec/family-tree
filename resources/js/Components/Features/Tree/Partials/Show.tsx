@@ -15,13 +15,8 @@ interface Props {
 }
 
 export default function DetailShowPage({ id, type, data, onShowEdit }: Props) {
-    const [editorText, setEditorText] = useState('')
     // const isAdmin = useAdmin()
     const isAdmin = true
-
-    useEffect(() => {
-        setEditorText(data.contents ?? '')
-    }, [data])
 
     function onClickShowEdit() {
         onShowEdit()
@@ -46,7 +41,7 @@ export default function DetailShowPage({ id, type, data, onShowEdit }: Props) {
             <dl>
                 <dt className="mb-2 font-semibold leading-none text-gray-900">詳細</dt>
                 <dd className="mb-4 font-light sm:mb-5">
-                <div className="editor-contents" dangerouslySetInnerHTML={{ __html: editorText }} />
+                <div className="editor-contents" dangerouslySetInnerHTML={{ __html: data.contents ?? '' }} />
                 </dd>
             </dl>
             {isAdmin && (
