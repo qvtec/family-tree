@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\FamilyController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,4 +17,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+
+    Route::get('/tree/{type}', [FamilyController::class, 'index'])->name('tree');
+    Route::get('/tree/{type}/{id}', [FamilyController::class, 'show'])->name('tree.show');
 });

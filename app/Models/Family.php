@@ -10,7 +10,6 @@ class Family extends Model
     use HasFactory;
 
     protected $casts = [
-        'id' => 'string',
         'types' => 'array',
         'pids' => 'array',
     ];

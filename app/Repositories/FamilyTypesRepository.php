@@ -19,14 +19,6 @@ class FamilyTypesRepository
     }
 
     /**
-    * @return \Illuminate\Database\Eloquent\Collection
-    */
-    public static function all()
-    {
-        return FamilyTypes::all();
-    }
-
-    /**
     * @param int $id
     * @return mixed
     */

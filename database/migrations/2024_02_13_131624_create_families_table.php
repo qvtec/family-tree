@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('families', function (Blueprint $table) {
-            $table->string('id')->primary();
+            $table->id();
             $table->json('types')->nullable();
-            $table->string('fid')->nullable();
-            $table->string('mid')->nullable();
+            $table->integer('fid')->nullable();
+            $table->integer('mid')->nullable();
             $table->json('pids')->nullable();
             $table->string('name');
             $table->string('yomi')->nullable();

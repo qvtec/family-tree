@@ -13,12 +13,15 @@ class FamilyController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request, string $type)
     {
-        $type = 'family';
-        $data = FamilyRepository::search($type);
+        $tid = $request->query('tid');
         $familyType = FamilyTypesRepository::search($type);
-        return Inertia::render('Tree', ['data' => $data, 'familyType' => $familyType]);
+        return Inertia::render('Tree', [
+            'roots' => $familyType['roots'],
+            'type' => $type,
+            'tid' => $tid,
+        ]);
     }
 
     /**
@@ -40,9 +43,9 @@ class FamilyController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Family $family)
+    public function show(string $type, int $id)
     {
-        //
+        dd([$type, $id]);
     }
 
     /**

@@ -28,5 +28,6 @@ Route::middleware('auth')->group(function () {
         return Inertia::render('Home');
     })->middleware(['auth', 'verified'])->name('home');
 
-    Route::get('/tree', [FamilyController::class, 'index'])->name('tree');
+    Route::get('/tree/{type}', [FamilyController::class, 'index'])->name('tree');
+    Route::get('/tree/{type}/{id}', [FamilyController::class, 'show'])->name('tree.show');
 });
