@@ -12,19 +12,20 @@ class FamilyTypesRepository
      * @param string $type
      * @return array
      */
-    public static function search(string $type)
+    public static function all()
     {
-        $data = FamilyTypes::where('type', $type)->first();
+        $data = FamilyTypes::all();
         return $data;
     }
 
     /**
-    * @param int $id
-    * @return mixed
+    * @param string $type
+    * @return array
     */
-    public static function show(int $id)
+    public static function show(string $type)
     {
-        return FamilyTypes::findOrFail($id);
+        $data = FamilyTypes::where('type', $type)->first();
+        return $data;
     }
 
     /**

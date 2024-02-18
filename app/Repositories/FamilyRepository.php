@@ -7,6 +7,17 @@ use App\Models\Family;
 class FamilyRepository
 {
     /**
+     * all
+     *
+     * @return array
+     */
+    public static function all()
+    {
+        $list = Family::all();
+        return $list;
+    }
+
+    /**
      * 一覧データ取得
      *
      * @param string $type

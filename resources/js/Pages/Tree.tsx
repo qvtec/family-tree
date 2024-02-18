@@ -1,27 +1,46 @@
 import Layout from '@/Layouts/Layout'
-import { Family, PageProps } from '@/types'
+import { Family, FamilyTypes, PageProps } from '@/types'
 import { useEffect, useState } from 'react'
 import Loading from '@/Components/Loading'
 import useAdmin from '@/hooks/useAdmin'
 import { toast } from 'react-toastify'
 import { post, get } from '@/utils/api'
 import TreeComponents from '@/Components/Features/Tree/Tree'
-import TreeDetailComponents from '@/Components/Features/Tree/Detail'
+import TreeDetail from '@/Components/Features/Tree/Detail'
+import { getRoots } from '@/utils/tree'
 
-export default function Tree({ auth, roots, type, id }: PageProps<{ roots: number[], type: string, id?: number }>) {
+export default function Tree({ auth, type, id }: PageProps<{ type: string, id?: number }>) {
     const isAdmin = useAdmin(auth.user)
 
     const [data, setData] = useState<Family[]>([])
+    const [roots, setRoots] = useState<number[]>([])
     const [loading, setLoading] = useState(true)
     const [showDetailId, setShowDetailId] = useState<number | null>(null)
 
     useEffect(() => {
       async function fetchData() {
-        const res = await get<Family[]>(`/api/tree/${type}`)
+        const url = type == 'all' ? '/api/tree-all' : `/api/tree/${type}`
+        const res = await get<Family[]>(url)
         if (res) setData(res)
+        await fetchFamilyType(res)
+        setLoading(false)
       }
+
+      async function fetchFamilyType(families: Family[] | undefined) {
+        if (families && id) {
+            setRoots([getRoots(families, id)])
+        } else {
+            const res = await get<FamilyTypes>(`/api/family-type/${type}`)
+
+            if (families && !res?.roots) {
+                setRoots([getRoots(families, auth.user.roots)])
+            } else if (res)  {
+                setRoots(res?.roots)
+            }
+        }
+      }
+
       fetchData()
-      setLoading(false)
     }, [])
 
     function onClickDetail(id: number) {
@@ -29,7 +48,6 @@ export default function Tree({ auth, roots, type, id }: PageProps<{ roots: numbe
     }
 
     async function updateNode(args: any) {
-        console.log('update Node')
         if (!isAdmin) {
             toast.warn('データは保存されません。')
             return
@@ -46,8 +64,8 @@ export default function Tree({ auth, roots, type, id }: PageProps<{ roots: numbe
     return (
         <Layout user={auth.user} title="Family Tree">
             {loading && <Loading />}
-            { showDetailId && <TreeDetailComponents id={showDetailId} type={type} />}
-            { !showDetailId && data.length > 0 && <TreeComponents id={id} type={type} roots={roots} data={data} onClickDetail={onClickDetail} updateNode={updateNode} /> }
+            { showDetailId && <TreeDetail id={showDetailId} type={type} />}
+            { !showDetailId && !loading && <TreeComponents id={id} type={type} roots={roots} data={data} onClickDetail={onClickDetail} updateNode={updateNode} /> }
         </Layout>
     );
 }

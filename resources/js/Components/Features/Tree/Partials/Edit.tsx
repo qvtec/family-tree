@@ -85,7 +85,6 @@ export default function DetailEditPage({ id, type, data, onHideEdit }: Props) {
         })
         .then((data) => {
             if (data.success) {
-                console.log(data.image_url)
                 const uploadedImageUrl = data.image_url
                 image.setAttribute('src', uploadedImageUrl)
             } else {

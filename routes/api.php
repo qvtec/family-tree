@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\FamilyController;
+use App\Http\Controllers\Api\FamilyTypesController;
 use App\Http\Controllers\Api\ImageUploadController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -35,5 +36,14 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/node/update', [FamilyController::class, 'nodeUpdate'])->name('node.update');
     });
 
+    Route::prefix('family-type')->name('tree.')->group(function() {
+        Route::get('/', [FamilyTypesController::class, 'index'])->name('index');
+        Route::get('/{type}', [FamilyTypesController::class, 'show'])->name('show');
+    });
+
     Route::post('/upload-image', [ImageUploadController::class, 'upload'])->name('upload.image');
+
+    Route::middleware('admin')->name('admin.')->group(function() {
+        Route::get('/tree-all', [FamilyController::class, 'all'])->name('tree-all');
+    });
 });

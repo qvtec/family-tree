@@ -9,7 +9,7 @@ class ImageController extends Controller
     public function getImage($filename)
     {
         if (!auth()->check()) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            abort(403, 'Unauthorized.');
         }
 
         $image = Storage::get('uploads/' . $filename);

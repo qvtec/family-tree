@@ -1,30 +1,44 @@
+import Loading from '@/Components/Loading'
 import Layout from '@/Layouts/Layout'
 import useAdmin from '@/hooks/useAdmin'
-import { PageProps } from '@/types'
+import { FamilyTypes, PageProps } from '@/types'
+import { get } from '@/utils/api'
 import { Link } from '@inertiajs/react'
+import { useEffect, useState } from 'react'
 
 export default function Home({ auth }: PageProps) {
     const isAdmin = useAdmin(auth.user)
 
-    const menu = [
-        { name: '阪田家', type: 'sakata' },
-        { name: '黒田家', type: 'kuroda' },
+    const [familyTypes, setFamilyTypes] = useState<FamilyTypes[]>([])
+    const [loading, setLoading] = useState(true)
+
+    const adminMenu = [
+      { name: '全員', href: `/tree/all?id=${auth.user.roots}` },
     ]
 
-    const privateMenu = [
-      { name: '親族', href: '/admin/tree/family' },
-      { name: '全員', href: `/tree/all?id=6` },
-    ]
+    useEffect(() => {
+      async function fetchFamilyType() {
+        const res = await get<FamilyTypes[]>(`/api/family-type`)
+        if (res) setFamilyTypes(res)
+      }
+      fetchFamilyType()
+      setLoading(false)
+    }, [])
+
+    function familyTypeName(type: string) {
+        const familyType = familyTypes.find(obj => obj.type == type)
+        return familyType?.name ?? ''
+    }
 
     return (
         <Layout user={auth.user} title="Home">
+            {loading && <Loading />}
             <div className="px-4">
-                <div className="my-8 border-2 border-dotted p-4">
-                    <div className="-mt-7 mb-4 w-40 bg-white text-center text-gray-500">各家系ごとのリンク</div>
+                <div className="my-8 p-4">
                     <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-                        {menu.map(({ name, type }, i) => (
+                        {auth.user.types.map((type, i) => (
                             <Link key={i} href={`/tree/${type}`} className="block max-w-full rounded-lg border border-gray-200 p-6 shadow hover:bg-gray-100">
-                                <div className="flex flex-col items-center text-sm text-gray-500">{name}</div>
+                                <div className="flex flex-col items-center text-sm text-gray-500">{familyTypeName(type)}</div>
                             </Link>
                         ))}
                     </div>
@@ -32,9 +46,9 @@ export default function Home({ auth }: PageProps) {
 
                 {isAdmin && (
                     <div className="my-8 border-2 border-dotted p-4">
-                        <div className="-mt-7 mb-4 w-40 bg-white text-center text-gray-500">プライベート用リンク</div>
+                        <div className="-mt-7 mb-4 w-40 bg-white text-center text-gray-500">管理者用リンク</div>
                         <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-                            {privateMenu.map(({ href, name }, i) => (
+                            {adminMenu.map(({ href, name }, i) => (
                                 <Link key={i} href={href} className="block max-w-full rounded-lg border border-gray-200 p-6 shadow hover:bg-gray-100">
                                     <div className="flex flex-col items-center text-sm text-gray-500">{name}</div>
                                 </Link>

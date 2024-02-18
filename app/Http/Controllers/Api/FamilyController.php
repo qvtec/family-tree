@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Repositories\FamilyRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FamilyController extends Controller
 {
@@ -14,6 +15,15 @@ class FamilyController extends Controller
     public function index(string $type)
     {
         $data = FamilyRepository::search($type);
+        return $data;
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function all()
+    {
+        $data = FamilyRepository::all();
         return $data;
     }
 

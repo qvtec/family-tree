@@ -30,11 +30,6 @@ Route::middleware('auth')->group(function () {
     })->name('home');
 
     Route::get('/tree/{type}', [FamilyController::class, 'index'])->name('tree');
-    Route::get('/tree/{type}/{id}', [FamilyController::class, 'show'])->name('tree.show');
 
     Route::get('/images/{filename}', [ImageController::class, 'getImage'])->name('image.get');
-
-    Route::get('/editor', function () {
-        return Inertia::render('Editor');
-    })->name('editor');
 });
