@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import { Link } from '@inertiajs/react';
-import { User } from '@/types';
+import { useState } from 'react'
+import { Link } from '@inertiajs/react'
+import { User } from '@/types'
 
 export default function Navbar({ user }: { user: User }) {
-    const [isShowNavSP, setIsShowNavSP] = useState(false);
+    const [isShowNavSP, setIsShowNavSP] = useState(false)
 
     return (
         <nav className="fixed start-0 top-0 z-20 w-full bg-cyan-700">

@@ -1,4 +1,4 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react'
 
 export default function Login({ status }: { status: string }) {
     return (
@@ -20,5 +20,5 @@ export default function Login({ status }: { status: string }) {
                 {status == 'pending' && <div className="text-gray-500 text-center mt-4">管理者の承認をお待ちください</div>}
             </div>
         </div>
-    );
+    )
 }

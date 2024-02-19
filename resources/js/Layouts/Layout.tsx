@@ -15,5 +15,5 @@ export default function Layouts({ user, title, children }: PropsWithChildren<{ u
             <main className="pt-14 md:pt-12">{children}</main>
             <ToastContainer transition={Slide} />
         </div>
-    );
+    )
 }

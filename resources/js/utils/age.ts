@@ -1,9 +1,9 @@
 /**
  * 現在の年齢または享年を算出
- * 
- * @param birth 
- * @param death 
- * @returns 
+ *
+ * @param birth
+ * @param death
+ * @returns
  */
 export function calcAge(birth: string, death: string) {
   const hasQuestionMarkDeath = death.includes('?')
@@ -24,35 +24,35 @@ export function calcAge(birth: string, death: string) {
 
 /**
  * 現在の年齢
- * 
- * @param birthDate 
- * @returns 
+ *
+ * @param birthDate
+ * @returns
  */
 function calcNowAge(birthDate: string) {
-  const today = new Date();
-  const birth = new Date(birthDate);
-  const age = today.getFullYear() - birth.getFullYear();
-  const monthDiff = today.getMonth() - birth.getMonth();
+  const today = new Date()
+  const birth = new Date(birthDate)
+  const age = today.getFullYear() - birth.getFullYear()
+  const monthDiff = today.getMonth() - birth.getMonth()
   if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
-    return age - 1;
+    return age - 1
   }
-  return age;
+  return age
 }
 
 /**
  * 亡くなった時の年齢
- * 
- * @param birthDate 
- * @param deathDate 
- * @returns 
+ *
+ * @param birthDate
+ * @param deathDate
+ * @returns
  */
 function calcLifespan(birthDate: string, deathDate: string) {
-  const birth = new Date(birthDate);
-  const death = new Date(deathDate);
-  const lifespan = death.getFullYear() - birth.getFullYear();
-  const monthDiff = death.getMonth() - birth.getMonth();
+  const birth = new Date(birthDate)
+  const death = new Date(deathDate)
+  const lifespan = death.getFullYear() - birth.getFullYear()
+  const monthDiff = death.getMonth() - birth.getMonth()
   if (monthDiff < 0 || (monthDiff === 0 && death.getDate() < birth.getDate())) {
-    return lifespan - 1;
+    return lifespan - 1
   }
-  return lifespan;
+  return lifespan
 }

@@ -66,5 +66,5 @@ export default function Tree({ auth, type, id }: PageProps<{ type: string, id?: 
             { showDetailId && <TreeDetail id={showDetailId} type={type} />}
             { !showDetailId && !loading && <TreeComponents id={id} type={type} roots={roots} data={data} onClickDetail={onClickDetail} updateNode={updateNode} /> }
         </Layout>
-    );
+    )
 }
