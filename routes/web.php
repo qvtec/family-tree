@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\GoogleLoginController;
@@ -32,4 +31,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/tree/{type}', [FamilyController::class, 'index'])->name('tree');
 
     Route::get('/images/{filename}', [ImageController::class, 'getImage'])->name('image.get');
+
+    Route::middleware('admin')->prefix('admin')->name('admin.')->group(function() {
+        Route::get('/user', function () {
+            return Inertia::render('Admin/User');
+        })->name('user');
+    });
 });

@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('roots')->nullable()->after('role');
-            $table->json('types')->nullable()->after('roots');
+            $table->integer('family_id')->nullable()->after('role');
+            $table->json('types')->nullable()->after('family_id');
         });
     }
 
@@ -24,6 +24,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('roots');
+            $table->dropColumn('types');
         });
     }
 };

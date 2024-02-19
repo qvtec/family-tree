@@ -3,8 +3,10 @@ export interface User {
     name: string;
     email: string;
     role: string;
-    roots: number;
+    family_id: number;
     types: string[];
+    created_at: string;
+    updated_at: string;
 }
 
 export interface FamilyTypes {

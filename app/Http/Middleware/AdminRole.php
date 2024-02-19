@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +17,10 @@ class AdminRole
     public function handle(Request $request, Closure $next): Response
     {
         if (auth()->user() && auth()->user()->role !== 'admin') {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            if ($request->is('api/*')) {
+                return response()->json(['error' => 'Unauthorized'], 401);
+            }
+            return redirect(RouteServiceProvider::HOME);
         }
 
         return $next($request);

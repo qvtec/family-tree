@@ -13,7 +13,8 @@ export default function Home({ auth }: PageProps) {
     const [loading, setLoading] = useState(true)
 
     const adminMenu = [
-      { name: '全員', href: `/tree/all?id=${auth.user.roots}` },
+      { name: '全員', href: `/tree/all?id=${auth.user.family_id}` },
+      { name: 'ユーザ管理', href: `/admin/user` },
     ]
 
     useEffect(() => {

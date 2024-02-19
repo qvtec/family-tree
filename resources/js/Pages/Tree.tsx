@@ -19,7 +19,7 @@ export default function Tree({ auth, type, id }: PageProps<{ type: string, id?: 
 
     useEffect(() => {
       async function fetchData() {
-        const url = type == 'all' ? '/api/tree-all' : `/api/tree/${type}`
+        const url = type == 'all' ? '/api/admin/tree-all' : `/api/tree/${type}`
         const res = await get<Family[]>(url)
         if (res) setData(res)
         await fetchFamilyType(res)
@@ -31,11 +31,10 @@ export default function Tree({ auth, type, id }: PageProps<{ type: string, id?: 
             setRoots([getRoots(families, id)])
         } else {
             const res = await get<FamilyTypes>(`/api/family-type/${type}`)
-
-            if (families && !res?.roots) {
-                setRoots([getRoots(families, auth.user.roots)])
-            } else if (res)  {
+            if (res && res.roots) {
                 setRoots(res?.roots)
+            } else if (families) {
+                setRoots([getRoots(families, auth.user.family_id)])
             }
         }
       }

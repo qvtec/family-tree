@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\FamilyController;
 use App\Http\Controllers\Api\FamilyTypesController;
 use App\Http\Controllers\Api\ImageUploadController;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -43,7 +44,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/upload-image', [ImageUploadController::class, 'upload'])->name('upload.image');
 
-    Route::middleware('admin')->name('admin.')->group(function() {
+    Route::middleware('admin')->prefix('admin')->name('admin.')->group(function() {
         Route::get('/tree-all', [FamilyController::class, 'all'])->name('tree-all');
+        Route::apiResource('user', UserController::class);
     });
 });
