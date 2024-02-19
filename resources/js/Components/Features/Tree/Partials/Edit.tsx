@@ -69,14 +69,14 @@ export default function DetailEditPage({ id, type, data, onHideEdit }: Props) {
 
     function handleSubmit() {
         async function postData() {
-            await api(`/api/tree/${type}/${id}`, { method: 'PUT', body: { contents: editorText } })
+            await api(route('admin.tree.update', id), { method: 'PUT', body: { contents: editorText } })
             onHideEdit()
         }
         postData()
     }
 
     function uploadImage(formData: FormData, image: HTMLImageElement) {
-        fetch(route('upload.image'), {
+        fetch(route('admin.upload.image'), {
             method: 'POST',
             body: formData
         })

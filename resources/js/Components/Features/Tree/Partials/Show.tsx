@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react'
 import ButtonDanger from '@/Components/ButtonDanger'
 import ButtonPrimary from '@/Components/ButtonPrimary'
 import ButtonSecondary from '@/Components/ButtonSecondary'
-import useAdmin from '@/hooks/useAdmin'
 import { Link } from '@inertiajs/react'
+import { remove } from '@/utils/api'
 
 interface Props {
     id: number
@@ -15,11 +15,15 @@ interface Props {
 }
 
 export default function DetailShowPage({ id, type, data, onShowEdit }: Props) {
-    // const isAdmin = useAdmin()
-    const isAdmin = true
-
     function onClickShowEdit() {
         onShowEdit()
+    }
+
+    function onClickDelete() {
+        async function removeData() {
+            await remove(route('admin.tree.destroy', id))
+        }
+        removeData()
     }
 
     if (!data) return
@@ -44,8 +48,7 @@ export default function DetailShowPage({ id, type, data, onShowEdit }: Props) {
                 <div className="editor-contents" dangerouslySetInnerHTML={{ __html: data.contents ?? '' }} />
                 </dd>
             </dl>
-            {isAdmin && (
-                <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-4">
                 <ButtonPrimary onClick={onClickShowEdit}>
                     <svg aria-hidden="true" className="-ml-1 mr-1 h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                     <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path>
@@ -57,7 +60,7 @@ export default function DetailShowPage({ id, type, data, onShowEdit }: Props) {
                     </svg>
                     Edit
                 </ButtonPrimary>
-                <ButtonDanger>
+                <ButtonDanger onClick={onClickDelete}>
                     <svg aria-hidden="true" className="-ml-1 mr-1.5 h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                     <path
                         fillRule="evenodd"
@@ -67,8 +70,7 @@ export default function DetailShowPage({ id, type, data, onShowEdit }: Props) {
                     </svg>
                     Delete
                 </ButtonDanger>
-                </div>
-            )}
+            </div>
             <div className="mt-6 flex items-center space-x-4">
                 <Link href={`/tree/${type}?id=${id}`}>
                     <ButtonSecondary>戻る</ButtonSecondary>
