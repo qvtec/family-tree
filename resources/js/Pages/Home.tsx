@@ -13,23 +13,18 @@ export default function Home({ auth }: PageProps) {
     const [loading, setLoading] = useState(true)
 
     const adminMenu = [
-      { name: '全員', href: `/tree/all?id=${auth.user.family_id}` },
-      { name: 'ユーザ管理', href: `/admin/user` },
+        { name: '全員', href: `/tree/all?id=${auth.user.family_id}` },
+        { name: 'ユーザ管理', href: `/admin/user` },
     ]
 
     useEffect(() => {
-      async function fetchFamilyType() {
-        const res = await get<FamilyTypes[]>(`/api/family-type`)
-        if (res) setFamilyTypes(res)
-      }
-      fetchFamilyType()
-      setLoading(false)
+        async function fetchFamilyType() {
+            const res = await get<FamilyTypes[]>(`/api/user-family-type`)
+            if (res) setFamilyTypes(res)
+        }
+        fetchFamilyType()
+        setLoading(false)
     }, [])
-
-    function familyTypeName(type: string) {
-        const familyType = familyTypes.find(obj => obj.type == type)
-        return familyType?.name ?? ''
-    }
 
     return (
         <Layout user={auth.user} title="Home">
@@ -37,9 +32,9 @@ export default function Home({ auth }: PageProps) {
             <div className="px-4">
                 <div className="my-8 p-4">
                     <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-                        {auth.user.types.map((type, i) => (
+                        {familyTypes.map(({name, type}, i) => (
                             <Link key={i} href={`/tree/${type}`} className="block max-w-full rounded-lg border border-gray-200 p-6 shadow hover:bg-gray-100">
-                                <div className="flex flex-col items-center text-sm text-gray-500">{familyTypeName(type)}</div>
+                                <div className="flex flex-col items-center text-sm text-gray-500">{name}</div>
                             </Link>
                         ))}
                     </div>

@@ -1,9 +1,12 @@
 import { useState } from 'react'
 import { Link } from '@inertiajs/react'
 import { User } from '@/types'
+import { useMenuContext } from '@/providers/MenuProvider'
 
 export default function Navbar({ user }: { user: User }) {
     const [isShowNavSP, setIsShowNavSP] = useState(false)
+
+    const menu = useMenuContext()
 
     return (
         <nav className="fixed start-0 top-0 z-20 w-full bg-cyan-700">
@@ -26,15 +29,17 @@ export default function Navbar({ user }: { user: User }) {
                 <div className={(isShowNavSP ? '' : 'hidden') + ' w-full items-center justify-between md:order-1 md:flex md:w-auto'}>
                     <ul className="mt-4 flex flex-col rounded-lg border border-gray-100 p-4 font-medium md:mt-0 md:flex-row md:space-x-8 md:border-0 md:p-0 rtl:space-x-reverse">
                         <li>
-                            <Link href="/" className={'block rounded px-3 py-2 text-white md:p-0' + (route().current('home') ? ' text-sky-300' : ' hover:text-sky-200')}>
+                            <Link href="/" className={'block rounded px-3 py-2 text-white md:p-0' + (route().current('home') ? ' text-cyan-500' : ' hover:text-sky-200')}>
                                 HOME
                             </Link>
                         </li>
-                        <li>
-                            <Link href="/next" className={'block rounded px-3 py-2 text-white md:p-0' + (route().current('next') ? ' text-sky-300' : ' hover:text-sky-200')}>
-                                NEXT
-                            </Link>
-                        </li>
+                        {menu.map(({name, type}, i) => (
+                            <li key={i}>
+                                <Link href={`/tree/${type}`} className={'block rounded px-3 py-2 text-white md:p-0' + (route().current('tree', type) ? ' text-cyan-500' : ' hover:text-sky-200')}>
+                                    {name}
+                                </Link>
+                            </li>
+                        ))}
                     </ul>
                 </div>
             </div>

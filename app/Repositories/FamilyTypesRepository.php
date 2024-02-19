@@ -19,6 +19,18 @@ class FamilyTypesRepository
     }
 
     /**
+     * 指定typesを含む一覧を取得
+     *
+     * @param string $type
+     * @return array
+     */
+    public static function search(array $types)
+    {
+        $list = FamilyTypes::whereIn('type', $types)->get();
+        return $list;
+    }
+
+    /**
     * @param string $type
     * @return array
     */

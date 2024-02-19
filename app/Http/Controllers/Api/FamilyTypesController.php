@@ -24,4 +24,14 @@ class FamilyTypesController extends Controller
         $data = FamilyTypesRepository::show($type);
         return response()->json($data);
     }
+
+    /**
+     * Display the specified resource.
+     */
+    public function userFamilyTypes()
+    {
+        $user_types = auth()->user()->types;
+        $data = FamilyTypesRepository::search($user_types);
+        return response()->json($data);
+    }
 }

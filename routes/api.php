@@ -37,10 +37,11 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/node/update', [FamilyController::class, 'nodeUpdate'])->name('node.update');
     });
 
-    Route::prefix('family-type')->name('tree.')->group(function() {
+    Route::prefix('family-type')->name('type.')->group(function() {
         Route::get('/', [FamilyTypesController::class, 'index'])->name('index');
         Route::get('/{type}', [FamilyTypesController::class, 'show'])->name('show');
     });
+    Route::get('/user-family-type', [FamilyTypesController::class, 'userFamilyTypes'])->name('type.user');
 
     Route::post('/upload-image', [ImageUploadController::class, 'upload'])->name('upload.image');
 
