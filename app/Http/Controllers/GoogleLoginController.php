@@ -10,6 +10,7 @@ use Exception;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Services\Slack\SlackFacade as Slack;
 
 class GoogleLoginController extends Controller
 {
@@ -37,6 +38,8 @@ class GoogleLoginController extends Controller
             $user = User::firstOrCreate(['email' => $email], [
                 'name' => $socialiteUser->name,
             ]);
+
+            Slack::send("My Family Treeにログインしました: {$user->name}<{$user->email}>");
 
             if ($user->role) {
                 Auth::login($user);
