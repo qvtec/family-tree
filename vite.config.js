@@ -14,17 +14,17 @@ export default defineConfig({
             registerType: 'autoUpdate',
             injectRegister: 'auto',
             includeAssets: ['favicon.ico', 'apple-touch-icon.png'],
+            outDir: 'public/build',
             manifest: {
                 name: 'My Family Tree App',
                 short_name: 'Family',
                 theme_color: '#0e7490',
                 background_color: "#FFFFFF",
-                start_url: "/",
                 display: "standalone",
                 orientation: "portrait",
                 icons: [
                     {
-                        src: 'pwa-192x192.png',
+                        src: '/pwa-192x192.png',
                         sizes: '192x192',
                         type: 'image/png',
                     },
@@ -34,7 +34,7 @@ export default defineConfig({
                         type: 'image/png',
                     },
                     {
-                        src: 'pwa-512x512.png',
+                        src: '/pwa-512x512.png',
                         sizes: '512x512',
                         type: 'image/png',
                         purpose: 'any maskable',
