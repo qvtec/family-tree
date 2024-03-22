@@ -29,11 +29,11 @@ export default function UserPage({ auth }: PageProps) {
 
     useEffect(() => {
         async function fetchData() {
-          const res = await get<User[]>(`/api/admin/user`)
-          if (res) {
-            setData(res)
-            setLoading(false)
-          }
+            const res = await get<User[]>(`/api/admin/user`)
+            if (res) {
+                setData(res)
+                setLoading(false)
+            }
         }
         fetchData()
     }, [])
@@ -44,7 +44,7 @@ export default function UserPage({ auth }: PageProps) {
             role: user.role,
             family_id: user.family_id,
             types_str: user.types ? user.types.join(', ') : '',
-            types: user.types
+            types: user.types,
         })
     }
 
@@ -85,11 +85,29 @@ export default function UserPage({ auth }: PageProps) {
                     <form onSubmit={submitForm}>
                         <p>{editUser.name}</p>
                         <Label htmlFor="role">role</Label>
-                        <Input type="text" name="role" value={formData?.role ?? ''} className="mt-1 block w-full" onChange={handleInputChange} />
+                        <Input
+                            type="text"
+                            name="role"
+                            value={formData?.role ?? ''}
+                            className="mt-1 block w-full"
+                            onChange={handleInputChange}
+                        />
                         <Label htmlFor="family_id">family_id</Label>
-                        <Input type="text" name="family_id" value={formData?.family_id ?? ''} className="mt-1 block w-full" onChange={handleInputChange} />
+                        <Input
+                            type="text"
+                            name="family_id"
+                            value={formData?.family_id ?? ''}
+                            className="mt-1 block w-full"
+                            onChange={handleInputChange}
+                        />
                         <Label htmlFor="types_str">types</Label>
-                        <Input type="text" name="types_str" value={formData?.types_str ?? ''} className="mt-1 block w-full" onChange={handleInputChange} />
+                        <Input
+                            type="text"
+                            name="types_str"
+                            value={formData?.types_str ?? ''}
+                            className="mt-1 block w-full"
+                            onChange={handleInputChange}
+                        />
                         <ButtonPrimary className="mt-2">更新</ButtonPrimary>
                     </form>
                 )}
@@ -97,41 +115,57 @@ export default function UserPage({ auth }: PageProps) {
 
             <div className="mx-auto max-w-7xl px-4 py-8 lg:py-16">
                 <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-                <table className="w-full text-left text-sm text-gray-500 rtl:text-right">
-                    <thead className="bg-gray-50 text-xs font-medium uppercase text-gray-900">
-                    <tr>
-                        <th scope="col" className="px-6 py-3">id</th>
-                        <th scope="col" className="px-6 py-3">name</th>
-                        <th scope="col" className="px-6 py-3">email</th>
-                        <th scope="col" className="px-6 py-3">role</th>
-                        <th scope="col" className="px-6 py-3">tid</th>
-                        <th scope="col" className="px-6 py-3">types</th>
-                        <th scope="col" className="px-6 py-3">date</th>
-                        <th scope="col" className="px-6 py-3"></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {data.map((user, i) => (
-                        <tr key={i}>
-                            <td className="px-6 py-4">{user.id}</td>
-                            <td className="px-6 py-4">{user.name}</td>
-                            <td className="px-6 py-4">{user.email}</td>
-                            <td className="px-6 py-4">{user.role}</td>
-                            <td className="px-6 py-4">{user.family_id}</td>
-                            <td className="px-6 py-4">{user.types && user.types.join(', ')}</td>
-                            <td className="px-6 py-4">
-                                {formatDateTime(user.created_at.toLocaleString())}
-                                <br />
-                                {formatDateTime(user.updated_at.toLocaleString())}
-                            </td>
-                            <td className="px-6 py-4">
-                                <ButtonPrimary onClick={() => onClickShowEdit(user)}>編集</ButtonPrimary>
-                                <ButtonDanger onClick={() => onClickDelete(user)} className='ml-4'>削除</ButtonDanger>
-                            </td>
-                        </tr>
-                    ))}
-                    </tbody>
-                </table>
+                    <table className="w-full text-left text-sm text-gray-500 rtl:text-right">
+                        <thead className="bg-gray-50 text-xs font-medium uppercase text-gray-900">
+                            <tr>
+                                <th scope="col" className="px-6 py-3">
+                                    id
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    name
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    email
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    role
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    tid
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    types
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    date
+                                </th>
+                                <th scope="col" className="px-6 py-3"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {data.map((user, i) => (
+                                <tr key={i}>
+                                    <td className="px-6 py-4">{user.id}</td>
+                                    <td className="px-6 py-4">{user.name}</td>
+                                    <td className="px-6 py-4">{user.email}</td>
+                                    <td className="px-6 py-4">{user.role}</td>
+                                    <td className="px-6 py-4">{user.family_id}</td>
+                                    <td className="px-6 py-4">{user.types && user.types.join(', ')}</td>
+                                    <td className="px-6 py-4">
+                                        {formatDateTime(user.created_at.toLocaleString())}
+                                        <br />
+                                        {formatDateTime(user.updated_at.toLocaleString())}
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        <ButtonPrimary onClick={() => onClickShowEdit(user)}>編集</ButtonPrimary>
+                                        <ButtonDanger onClick={() => onClickDelete(user)} className="ml-4">
+                                            削除
+                                        </ButtonDanger>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </Layout>

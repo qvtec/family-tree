@@ -6,20 +6,20 @@
  * @returns
  */
 export function calcAge(birth: string, death: string) {
-  const hasQuestionMarkDeath = death.includes('?')
-  const deathDay = hasQuestionMarkDeath ? death.replace('?', '') : death
-  if (death && death == '?') return ''
+    const hasQuestionMarkDeath = death.includes('?')
+    const deathDay = hasQuestionMarkDeath ? death.replace('?', '') : death
+    if (death && death == '?') return ''
 
-  const hasQuestionMark = birth.includes('?')
-  const birthDay = hasQuestionMark ? birth.replace('?', '') : birth
-  if (birth == '' || birth == '?') return ''
+    const hasQuestionMark = birth.includes('?')
+    const birthDay = hasQuestionMark ? birth.replace('?', '') : birth
+    if (birth == '' || birth == '?') return ''
 
-  const age = death ? calcLifespan(birthDay, deathDay) : calcNowAge(birthDay)
+    const age = death ? calcLifespan(birthDay, deathDay) : calcNowAge(birthDay)
 
-  if (death) {
-    return '享年' + age + '歳 ' + death
-  }
-  return '( ' + age + ' )'
+    if (death) {
+        return '享年' + age + '歳 ' + death
+    }
+    return '( ' + age + ' )'
 }
 
 /**
@@ -29,14 +29,14 @@ export function calcAge(birth: string, death: string) {
  * @returns
  */
 function calcNowAge(birthDate: string) {
-  const today = new Date()
-  const birth = new Date(birthDate)
-  const age = today.getFullYear() - birth.getFullYear()
-  const monthDiff = today.getMonth() - birth.getMonth()
-  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
-    return age - 1
-  }
-  return age
+    const today = new Date()
+    const birth = new Date(birthDate)
+    const age = today.getFullYear() - birth.getFullYear()
+    const monthDiff = today.getMonth() - birth.getMonth()
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
+        return age - 1
+    }
+    return age
 }
 
 /**
@@ -47,12 +47,12 @@ function calcNowAge(birthDate: string) {
  * @returns
  */
 function calcLifespan(birthDate: string, deathDate: string) {
-  const birth = new Date(birthDate)
-  const death = new Date(deathDate)
-  const lifespan = death.getFullYear() - birth.getFullYear()
-  const monthDiff = death.getMonth() - birth.getMonth()
-  if (monthDiff < 0 || (monthDiff === 0 && death.getDate() < birth.getDate())) {
-    return lifespan - 1
-  }
-  return lifespan
+    const birth = new Date(birthDate)
+    const death = new Date(deathDate)
+    const lifespan = death.getFullYear() - birth.getFullYear()
+    const monthDiff = death.getMonth() - birth.getMonth()
+    if (monthDiff < 0 || (monthDiff === 0 && death.getDate() < birth.getDate())) {
+        return lifespan - 1
+    }
+    return lifespan
 }

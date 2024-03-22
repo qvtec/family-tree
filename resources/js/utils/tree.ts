@@ -1,4 +1,5 @@
-import FamilyTree from "@balkangraph/familytree.js"
+import { Family } from '@/types'
+import FamilyTree from '@balkangraph/familytree.js'
 
 export type TreeType = 'vertical' | 'wide'
 
@@ -8,11 +9,9 @@ export type TreeType = 'vertical' | 'wide'
  * @returns string
  */
 export function menuButton() {
-  return (
-    `<div style="position:absolute;right:{p}px;top:{p}px;" data-ctrl-menu="">
+    return `<div style="position:absolute;right:{p}px;top:{p}px;" data-ctrl-menu="">
     <Image src="/img/settings.svg" alt="" className="w-5 h-5" width={25} height={25} priority />
     </div>`
-  )
 }
 
 /**
@@ -107,39 +106,52 @@ export function treeTemplate(treeType: TreeType) {
 
         FamilyTree.templates.main = Object.assign({}, FamilyTree.templates.base)
         FamilyTree.templates.main.size = [60, 160]
-        FamilyTree.templates.main.node = '<rect x="0" y="0" height="{h}" width="{w}" fill="#ffffff" strokeWidth="3" stroke="#ccc" rx="5" ry="5"></rect>'
+        FamilyTree.templates.main.node =
+            '<rect x="0" y="0" height="{h}" width="{w}" fill="#ffffff" strokeWidth="3" stroke="#ccc" rx="5" ry="5"></rect>'
 
         // name
-        FamilyTree.templates.main.field_0 = '<text data-width="130" style="font-size: 14px; writing-mode: vertical-rl; text-orientation: mixed;" fill="black" x="30" y="25" text-anchor="start">{val}</text>'
+        FamilyTree.templates.main.field_0 =
+            '<text data-width="130" style="font-size: 14px; writing-mode: vertical-rl; text-orientation: mixed;" fill="black" x="30" y="25" text-anchor="start">{val}</text>'
         // yomi
-        FamilyTree.templates.main.field_1 = '<text data-width="130" style="font-size: 10px; writing-mode: vertical-rl; text-orientation: mixed;" fill="#b1b9be" x="44" y="25" text-anchor="start">{val}</text>'
+        FamilyTree.templates.main.field_1 =
+            '<text data-width="130" style="font-size: 10px; writing-mode: vertical-rl; text-orientation: mixed;" fill="#b1b9be" x="44" y="25" text-anchor="start">{val}</text>'
         // id
-        FamilyTree.templates.main.field_3 = '<text width="230" style="font-size: 10px;" fill="#8e969c" x="40" y="130" text-anchor="end">{val}</text>'
+        FamilyTree.templates.main.field_3 =
+            '<text width="230" style="font-size: 10px;" fill="#8e969c" x="40" y="130" text-anchor="end">{val}</text>'
         // birthY
-        FamilyTree.templates.main.field_5 = '<text width="230" style="font-size: 10px;" fill="#8e969c" x="40" y="150" text-anchor="end">{val}</text>'
+        FamilyTree.templates.main.field_5 =
+            '<text width="230" style="font-size: 10px;" fill="#8e969c" x="40" y="150" text-anchor="end">{val}</text>'
     } else {
         FamilyTree.templates.base.defs = wideDefs
 
         FamilyTree.templates.main = Object.assign({}, FamilyTree.templates.base)
-        FamilyTree.templates.main.node = '<rect x="0" y="0" height="{h}" width="{w}" fill="#ffffff" strokeWidth="3" stroke="#ccc" rx="5" ry="5"></rect>'
+        FamilyTree.templates.main.node =
+            '<rect x="0" y="0" height="{h}" width="{w}" fill="#ffffff" strokeWidth="3" stroke="#ccc" rx="5" ry="5"></rect>'
 
         // name
-        FamilyTree.templates.main.field_0 = '<text width="230" style="font-size: 14px;" fill="black" x="125" y="90" text-anchor="middle">{val}</text>'
+        FamilyTree.templates.main.field_0 =
+            '<text width="230" style="font-size: 14px;" fill="black" x="125" y="90" text-anchor="middle">{val}</text>'
         // birth
-        FamilyTree.templates.main.field_2 = '<text width="230" style="font-size: 10px;" fill="#8e969c" x="125" y="70" text-anchor="middle">{val}</text>'
+        FamilyTree.templates.main.field_2 =
+            '<text width="230" style="font-size: 10px;" fill="#8e969c" x="125" y="70" text-anchor="middle">{val}</text>'
         // yomi
-        FamilyTree.templates.main.field_1 = '<text width="230" style="font-size: 10px;" fill="#8e969c" x="230" y="30" text-anchor="end">{val}</text>'
+        FamilyTree.templates.main.field_1 =
+            '<text width="230" style="font-size: 10px;" fill="#8e969c" x="230" y="30" text-anchor="end">{val}</text>'
         // age
-        FamilyTree.templates.main.field_3 = '<text width="230" style="font-size: 10px;" fill="#8e969c" x="230" y="40" text-anchor="end">{val}</text>'
+        FamilyTree.templates.main.field_3 =
+            '<text width="230" style="font-size: 10px;" fill="#8e969c" x="230" y="40" text-anchor="end">{val}</text>'
         // id
-        FamilyTree.templates.main.field_4 = '<text width="230" style="font-size: 10px;" fill="#8e969c" x="230" y="105" text-anchor="end">{val}</text>'
+        FamilyTree.templates.main.field_4 =
+            '<text width="230" style="font-size: 10px;" fill="#8e969c" x="230" y="105" text-anchor="end">{val}</text>'
     }
 
     FamilyTree.templates.main_male = Object.assign({}, FamilyTree.templates.main)
-    FamilyTree.templates.main_male.node = '<rect x="0" y="0" height="{h}" width="{w}" fill="#ffffff" strokeWidth="3" stroke="#6bb4df" rx="5" ry="5"></rect>'
+    FamilyTree.templates.main_male.node =
+        '<rect x="0" y="0" height="{h}" width="{w}" fill="#ffffff" strokeWidth="3" stroke="#6bb4df" rx="5" ry="5"></rect>'
 
     FamilyTree.templates.main_female = Object.assign({}, FamilyTree.templates.main_male)
-    FamilyTree.templates.main_female.node = '<rect x="0" y="0" height="{h}" width="{w}" fill="#ffffff" strokeWidth="3" stroke="#cb4aaf" rx="5" ry="5"></rect>'
+    FamilyTree.templates.main_female.node =
+        '<rect x="0" y="0" height="{h}" width="{w}" fill="#ffffff" strokeWidth="3" stroke="#cb4aaf" rx="5" ry="5"></rect>'
 
     FamilyTree.templates.main.menuButton = menuButton()
 
@@ -156,9 +168,10 @@ export function treeTemplate(treeType: TreeType) {
  * @param readOnly
  * @returns
  */
-export function myTextArea(data: any, editElement: any, readOnly: any) {
+export function myTextArea(data: Family[], editElement: FamilyTree.editFormElement, readOnly: boolean) {
     const id = FamilyTree.elements.generateId()
-    const value = data[editElement.binding] ?? ''
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    const value = editElement.binding ? data[editElement.binding] : ''
     if (readOnly && !value) return { html: '' }
     const rOnlyAttr = readOnly ? 'readonly' : ''
     const rDisabledAttr = readOnly ? 'disabled' : ''
@@ -180,8 +193,8 @@ export function myTextArea(data: any, editElement: any, readOnly: any) {
  * @param family
  * @returns
  */
-export function getRoots(data: any[], id: number) {
-    let node = getNode(data, id)
+export function getRoots(data: Family[], id: number) {
+    let node = getNode(data, id.toString())
     let cnt = 0
     while (node) {
         let targetId = node.fid ?? node.mid ?? ''
@@ -190,7 +203,7 @@ export function getRoots(data: any[], id: number) {
             // 親情報なしなら夫婦情報を取得し、相手の親情報もなければbreak
             targetId = node.pids[node.pids.length - 1]
             const pNode = getNode(data, targetId)
-            if (!pNode.fid && !pNode.mid) {
+            if (!pNode?.fid && !pNode?.mid) {
                 break
             }
         }
@@ -205,7 +218,6 @@ export function getRoots(data: any[], id: number) {
     return node?.id
 }
 
-function getNode(data: any[], id: number) {
-    return data.find(obj => obj.id == id)
+function getNode(data: Family[], id: string) {
+    return data.find((obj) => obj.id == id)
 }
-

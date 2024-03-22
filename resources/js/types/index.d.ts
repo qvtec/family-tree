@@ -1,12 +1,12 @@
 export interface User {
-    id: number;
-    name: string;
-    email: string;
-    role: string;
-    family_id: number;
-    types: string[];
-    created_at: string;
-    updated_at: string;
+    id: number
+    name: string
+    email: string
+    role: string
+    family_id: number
+    types: string[]
+    created_at: string
+    updated_at: string
 }
 
 export interface FamilyTypes {
@@ -38,6 +38,6 @@ export interface Family {
 
 export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> = T & {
     auth: {
-        user: User;
-    };
-};
+        user: User
+    }
+}

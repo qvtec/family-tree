@@ -19,37 +19,39 @@
         vertical-align: top;
 
         &.tommy {
-        .node {
-            &.female > rect {
-            fill: #ff958f;
-            }
+            .node {
+                &.female > rect {
+                    fill: #ff958f;
+                }
 
-            &.male > rect {
-            fill: #8fbcff;
+                &.male > rect {
+                    fill: #8fbcff;
+                }
             }
         }
-        }
     }
-    }
+}
 
-    .bft-edit-form {
+.bft-edit-form {
     .bft-edit-form-header {
         height: 60px !important;
         border-radius: 0 !important;
 
         #bft-avatar {
-        display: none !important;
+            display: none !important;
         }
     }
 
     &.male {
-        .bft-edit-form-header, .bft-img-button {
-        background-color: #8fbcff !important;
+        .bft-edit-form-header,
+        .bft-img-button {
+            background-color: #8fbcff !important;
         }
     }
     &.female {
-        .bft-edit-form-header, .bft-img-button {
-        background-color: #ff958f !important;
+        .bft-edit-form-header,
+        .bft-img-button {
+            background-color: #ff958f !important;
         }
     }
 
@@ -59,13 +61,13 @@
 
     .bft-edit-form-fields {
         .bft-form-field {
-        textarea {
-            color: #757575 !important;
+            textarea {
+                color: #757575 !important;
 
-            &[readonly] {
-            border-color: transparent !important;
+                &[readonly] {
+                    border-color: transparent !important;
+                }
             }
-        }
         }
     }
 }

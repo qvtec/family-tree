@@ -26,7 +26,7 @@ export default function TreeComponents(props: Props) {
     useEffect(() => {
         const family = new FamilyTree(document.getElementById('tree')!, {
             template: 'main',
-            scaleInitial:FamilyTree.match.height,
+            scaleInitial: FamilyTree.match.height,
             enableSearch: false,
             ...treeOptions(treeType),
             nodeBinding: {
@@ -40,8 +40,8 @@ export default function TreeComponents(props: Props) {
             editForm: editFormOptions,
             menu: {
                 tree_type: {
-                    text: "Change Tree Type",
-                    onClick: changeTreeType
+                    text: 'Change Tree Type',
+                    onClick: changeTreeType,
                 },
                 pdf: { text: 'Export PDF' },
                 png: { text: 'Export PNG' },
@@ -70,7 +70,7 @@ export default function TreeComponents(props: Props) {
         })
 
         family.onInit(() => {
-            const {id, data, roots} = props
+            const { id, data, roots } = props
             family.config.roots = id ? [getRoots(data, id)] : roots
             family.load(data)
         })
@@ -80,7 +80,7 @@ export default function TreeComponents(props: Props) {
         }
 
         FamilyTree.templates = treeTemplate(treeType)
-        FamilyTree.elements.myTextArea = function (data: any, editElement: any, readOnly: any) {
+        FamilyTree.elements.myTextArea = function (data: Family[], editElement: any, readOnly: boolean) {
             return myTextArea(data, editElement, readOnly)
         }
     }, [treeType])

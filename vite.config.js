@@ -19,9 +19,9 @@ export default defineConfig({
                 name: 'My Family Tree App',
                 short_name: 'Family',
                 theme_color: '#0e7490',
-                background_color: "#FFFFFF",
-                display: "standalone",
-                orientation: "portrait",
+                background_color: '#FFFFFF',
+                display: 'standalone',
+                orientation: 'portrait',
                 icons: [
                     {
                         src: '/pwa-192x192.png',
@@ -40,7 +40,7 @@ export default defineConfig({
                         purpose: 'any maskable',
                     },
                 ],
-            }
+            },
         }),
     ],
-});
+})

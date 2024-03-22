@@ -8,7 +8,7 @@ import { MenuProvider } from '@/providers/MenuProvider'
 import 'react-toastify/dist/ReactToastify.css'
 import '../../css/main.scss'
 
-export default function Layouts({ user, title, children }: PropsWithChildren<{ user: User, title?: string }>) {
+export default function Layouts({ user, title, children }: PropsWithChildren<{ user: User; title?: string }>) {
     return (
         <div className="min-h-screen">
             <MenuProvider>
