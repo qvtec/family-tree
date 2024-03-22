@@ -3,13 +3,13 @@ import { Link } from '@inertiajs/react'
 import { User } from '@/types'
 import { useMenuContext } from '@/providers/MenuProvider'
 
-export default function Navbar({ user }: { user: User }) {
+export default function Navbar({ user, className = '' }: { user: User; className?: string }) {
     const [isShowNavSP, setIsShowNavSP] = useState(false)
 
     const menu = useMenuContext()
 
     return (
-        <nav className="fixed start-0 top-0 z-20 w-full bg-cyan-700">
+        <nav className={'fixed start-0 top-0 z-20 w-full bg-cyan-700 ' + className}>
             <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between p-2">
                 <Link href="/" className="flex items-center space-x-3 text-white rtl:space-x-reverse">
                     <img

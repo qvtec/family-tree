@@ -1,4 +1,4 @@
-import Layout from '@/Layouts/Layout'
+import TreeLayout from '@/Layouts/TreeLayout'
 import { Family, FamilyTypes, PageProps } from '@/types'
 import { useEffect, useState } from 'react'
 import Loading from '@/Components/Loading'
@@ -17,30 +17,35 @@ export default function Tree({ auth, type, id }: PageProps<{ type: string; id?: 
     const [loading, setLoading] = useState(true)
     const [showDetailId, setShowDetailId] = useState<number | null>(null)
 
+    const clinks: any[] = [
+        // { from: 146, to: 14, label: 'mother', template: 'myTemplate' },
+        { from: 145, to: 146, label: 'marriage', template: 'myTemplate' },
+    ]
+
     useEffect(() => {
-        async function fetchData() {
-            const url = type == 'all' ? '/api/admin/tree-all' : `/api/tree/${type}`
-            const res = await get<Family[]>(url)
-            if (res) setData(res)
-            await fetchFamilyType(res)
-            setLoading(false)
-        }
-
-        async function fetchFamilyType(families: Family[] | undefined) {
-            if (families && id) {
-                setRoots([getRoots(families, id)])
-            } else {
-                const res = await get<FamilyTypes>(`/api/family-type/${type}`)
-                if (res && res.roots) {
-                    setRoots(res?.roots)
-                } else if (families) {
-                    setRoots([getRoots(families, auth.user.family_id)])
-                }
-            }
-        }
-
         fetchData()
     }, [])
+
+    async function fetchData() {
+        const url = type == 'all' ? '/api/admin/tree-all' : `/api/tree/${type}`
+        const res = await get<Family[]>(url)
+        if (res) setData(res)
+        await fetchFamilyType(res)
+        setLoading(false)
+    }
+
+    async function fetchFamilyType(families: Family[] | undefined) {
+        if (families && id) {
+            setRoots(getRoots(families, id))
+        } else {
+            const res = await get<FamilyTypes>(`/api/family-type/${type}`)
+            if (res && res.roots) {
+                setRoots(res.roots)
+            } else if (families) {
+                setRoots(getRoots(families, auth.user.family_id))
+            }
+        }
+    }
 
     function onClickDetail(id: number) {
         setShowDetailId(id)
@@ -58,10 +63,17 @@ export default function Tree({ auth, type, id }: PageProps<{ type: string; id?: 
         }
 
         await post(route('tree.node.update', type), args)
+        if (args.addNodesData.length > 0) {
+            const newUrl = new URL(window.location.href)
+            newUrl.searchParams.set('id', args.updateNodesData[0].id)
+            // window.location.href = newUrl.toString()
+            console.log(newUrl)
+            fetchData()
+        }
     }
 
     return (
-        <Layout user={auth.user} title="Family Tree">
+        <TreeLayout user={auth.user} title="Family Tree">
             {loading && <Loading />}
             {showDetailId && <TreeDetail id={showDetailId} type={type} />}
             {!showDetailId && !loading && (
@@ -70,10 +82,11 @@ export default function Tree({ auth, type, id }: PageProps<{ type: string; id?: 
                     type={type}
                     roots={roots}
                     data={data}
+                    clinks={clinks}
                     onClickDetail={onClickDetail}
                     updateNode={updateNode}
                 />
             )}
-        </Layout>
+        </TreeLayout>
     )
 }

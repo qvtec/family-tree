@@ -11,7 +11,7 @@
     height: calc(100vh - 48px);
 
     @media (max-width: 767px) {
-        height: calc(100vh - 56px);
+        height: 100vh;
     }
 
     svg {
