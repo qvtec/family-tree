@@ -14,7 +14,7 @@ class FamilyRepository
     public static function all()
     {
         $list = Family::all();
-        return $list;
+        return FamilyRepository::formatTreeData($list);
     }
 
     /**
@@ -25,8 +25,8 @@ class FamilyRepository
      */
     public static function search(string $type)
     {
-        $list = Family::whereJsonContains('types', $type)->get();
-        return $list;
+        $list = Family::whereJsonContains('types', $type)->orderBy('id')->take(600)->get();
+        return FamilyRepository::formatTreeData($list);
     }
 
     /**
@@ -65,5 +65,52 @@ class FamilyRepository
     public static function delete(int $id)
     {
         return Family::destroy($id);
+    }
+
+    /**
+     * format tree data
+     *
+     * @param object $list
+     * @return void
+     */
+    private static function formatTreeData($list) {
+        $data = [];
+        foreach ($list as $item) {
+            $father = $list->first(function ($parent) use ($item) {
+                return $parent->id == $item->fid;
+            });
+            $mother = $list->first(function ($parent) use ($item) {
+                return $parent->id == $item->mid;
+            });
+
+            $childlen = $list->filter(function ($child) use ($item) {
+                $parentId = $item->gender == 'male' ? $child->fid : $child->mid;
+                return $parentId === $item->id;
+            })->pluck('id');
+            $childrenIds = array_map('strval', $childlen->toArray());
+
+            $gender = 'O';
+            if ($item->gender == 'male') $gender = 'M';
+            if ($item->gender == 'female') $gender = 'F';
+
+            $rels = [];
+            if ($item->pids) $rels['spouses'] = array_map('strval', $item->pids);
+            if (!$childlen->isEmpty()) $rels['children'] = $childrenIds;
+            if ($father !== null) $rels['father'] = strval($item->fid);
+            if ($mother !== null) $rels['mother'] = strval($item->mid);
+
+            $data[] = [
+                'id' => strval($item->id),
+                'rels' => $rels,
+                'data' => [
+                    'first_name' => $item->name,
+                    'last_name' => '',
+                    'birthday' => $item->birth,
+                    'avatar' => '',
+                    'gender' => $gender,
+                ]
+            ];
+        }
+        return $data;
     }
 }

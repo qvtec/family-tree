@@ -9,6 +9,12 @@ export interface User {
     updated_at: string
 }
 
+export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> = T & {
+    auth: {
+        user: User
+    }
+}
+
 export interface FamilyTypes {
     id: number
     name: string
@@ -36,8 +42,23 @@ export interface Family {
     contents: string | null
 }
 
-export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> = T & {
-    auth: {
-        user: User
-    }
+export interface FamilyChart {
+    id: string
+    rels: FamilyChartRels
+    data: FamilyChartData
+}
+
+export interface FamilyChartRels {
+    spouses?: string[]
+    father?: string
+    mother?: string
+    children?: string[]
+}
+
+export interface FamilyChartData {
+    first_name: string
+    last_name: string
+    birthday: string
+    avatar: string
+    gender: string
 }

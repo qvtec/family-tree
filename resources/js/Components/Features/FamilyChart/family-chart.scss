@@ -1,0 +1,128 @@
+.f3 {
+    height: 100vh;
+    width: 100%;
+    margin: auto;
+    position: relative;
+
+    .cursor-pointer {
+        cursor: pointer;
+    }
+
+    svg.main_svg {
+        width: 100%;
+        height: 100%;
+        background-color: #fff;
+        color: #3b5560;
+        text {
+            fill: currentColor;
+        }
+    }
+
+    rect.card-female,
+    .card-female .card-body-rect,
+    .card-female .text-overflow-mask {
+        fill: #f7b5b0;
+    }
+    rect.card-male,
+    .card-male .card-body-rect,
+    .card-male .text-overflow-mask {
+        fill: #ccdff6;
+    }
+
+    .card-body.card_add .card-body-rect {
+        fill: #d2d2d2;
+        stroke: #8d8d8d;
+    }
+
+    .card-genderless .card-body-rect,
+    .card-genderless .text-overflow-mask {
+        fill: lightgray;
+    }
+
+    .link {
+        stroke: #3b5560;
+    }
+
+    .card_add {
+        .card-body-rect {
+            fill: #3b5560;
+            stroke-width: 4px;
+            stroke: #3b5560;
+            cursor: pointer;
+        }
+    }
+    g.card_add text {
+        fill: #fff;
+    }
+    .card-main {
+        stroke: #000;
+    }
+
+    .card_family_tree {
+        rect {
+            transition: 0.3s;
+        }
+        &:hover rect {
+            transform: scale(1.1);
+        }
+        g line {
+            stroke: #3b5560;
+        }
+    }
+
+    .card_add_relative {
+        cursor: pointer;
+        color: #fff;
+        transition: 0.3s;
+
+        &:hover {
+            color: black;
+        }
+
+        circle {
+            fill: rgba(0, 0, 0, 0);
+        }
+    }
+
+    .card_edit {
+        &.pencil_icon {
+            color: #fff;
+            transition: 0.3s;
+        }
+        &.pencil_icon:hover {
+            color: black;
+        }
+    }
+
+    .card_break_link,
+    .link_upper,
+    .link_lower,
+    .link_particles {
+        transform-origin: 50% 50%;
+        transition: 1s;
+    }
+
+    .card_break_link {
+      color: #fff;
+        &.closed {
+            .link_upper {
+                transform: translate(-140.5px, 655.6px);
+                g {
+                    transform: rotate(-58deg);
+                }
+            }
+            .link_particles {
+                transform: scale(0);
+            }
+        }
+    }
+
+    .input-field input {
+        height: 2.5rem !important;
+    }
+    .input-field > label:not(.label-icon).active {
+        -webkit-transform: translateY(-8px) scale(0.8);
+        transform: translateY(-8px) scale(0.8);
+    }
+}
+
