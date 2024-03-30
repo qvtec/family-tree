@@ -43,6 +43,9 @@ run-install:
 	$(SAIL) exec laravel.test npm install
 run-build:
 	$(SAIL) exec laravel.test npm run build
+run-custom:
+	$(SAIL) exec laravel.test npm install ./resources/js/lib/family-chart/family-chart-0.0.0-beta-1.tgz
+	$(SAIL) exec laravel.test npm run dev
 
 # DB ////////////////////////////////////////////////////////////////////////////
 migrate:

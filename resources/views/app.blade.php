@@ -12,10 +12,6 @@
         <link rel="manifest" href="/build/manifest.webmanifest">
         <script id="vite-plugin-pwa:register-sw" src="/build/registerSW.js"></script>
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
         <!-- Scripts -->
         @routes
         @viteReactRefresh
