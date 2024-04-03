@@ -80,7 +80,10 @@ export default function FamilyChartComponent(props: Props) {
         })
 
         view.setCard(Card)
-        store.setOnUpdate((props: FamilyChart) => view.update(props || {}))
+        store.setOnUpdate((props: any) => {
+            if (props.initial) return view.update({ transition_time: 0 })
+            return view.update({ ...props, tree_position: 'main_to_middle', transition_time: 1000 } || {})
+        })
         store.update.tree({ initial: true })
 
         function cardEditForm(props: CardEditProps) {
