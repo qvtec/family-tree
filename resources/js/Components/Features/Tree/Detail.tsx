@@ -32,20 +32,18 @@ export default function TreeDetailComponents({ id, type }: Props) {
 
     return (
         <section className="bg-white">
-            <div className="mx-auto max-w-2xl px-4 py-8 lg:py-16">
-                <p className="text-sm leading-none text-gray-500 md:text-sm">{data.yomi}</p>
-                <h2 className="mb-2 text-xl font-semibold leading-none text-gray-900 md:text-2xl">{data.name}</h2>
-                <p className="mb-4 text-sm font-extrabold leading-none text-gray-900 md:text-lg">
-                    {data.birth}
-                    {data.death && ` ~ ${data.death}`}
-                </p>
+            <p className="text-sm leading-none text-gray-500 md:text-sm">{data.yomi}</p>
+            <h2 className="mb-2 text-xl font-semibold leading-none text-gray-900 md:text-2xl">{data.name}</h2>
+            <p className="mb-4 text-sm font-extrabold leading-none text-gray-900 md:text-lg">
+                {data.birth}
+                {data.death && ` ~ ${data.death}`}
+            </p>
 
-                {!showEdit ? (
-                    <DetailShowPage id={id} type={type} data={data} onShowEdit={() => setShowEdit(true)} />
-                ) : (
-                    <DetailEditPage id={id} type={type} data={data} onHideEdit={() => setShowEdit(false)} />
-                )}
-            </div>
+            {!showEdit ? (
+                <DetailShowPage id={id} type={type} data={data} onShowEdit={() => setShowEdit(true)} />
+            ) : (
+                <DetailEditPage id={id} type={type} data={data} onHideEdit={() => setShowEdit(false)} />
+            )}
         </section>
     )
 }

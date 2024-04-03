@@ -7,6 +7,8 @@ import Modal from '@/Components/Modal'
 import './family-chart.scss'
 import MenuComponent from './elements/Menu'
 import { DetailIcon, PlusIcon } from './elements/Icon'
+import TreeDetailComponents from '../Tree/Detail'
+import ButtonSecondary from '@/Components/ButtonSecondary'
 
 export type TreeType = 'wide' | 'vertical'
 
@@ -125,9 +127,14 @@ export default function FamilyChartComponent(props: Props) {
         <>
             <div className={'f3' + ` type-${treeType}`} id="FamilyChart" ref={cont}></div>
             <Modal show={showEdit} onClose={handleClose}>
-                {selected && (
-                    <Form selected={selected} cardEdit={cardEdit} cardDisplay={cardDisplay} close={handleClose} />
-                )}
+                <div className="p-4 lg:p-8">
+                    <div className="flex justify-end">
+                        <ButtonSecondary className="rounded-full p-2" onClick={handleClose}>
+                            ✕
+                        </ButtonSecondary>
+                    </div>
+                    {selected && <TreeDetailComponents id={Number(selected.datum.id)} type={props.type} />}
+                </div>
             </Modal>
             <MenuComponent changeTreeType={changeTreeType} />
         </>

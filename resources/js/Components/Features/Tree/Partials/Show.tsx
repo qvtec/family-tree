@@ -23,7 +23,10 @@ export default function DetailShowPage({ id, type, data, onShowEdit }: Props) {
         async function removeData() {
             await remove(route('admin.tree.destroy', id))
         }
-        removeData()
+        const isConfirmed = window.confirm('本当に削除しますか？')
+        if (isConfirmed) {
+            removeData()
+        }
     }
 
     if (!data) return
@@ -82,11 +85,6 @@ export default function DetailShowPage({ id, type, data, onShowEdit }: Props) {
                     </svg>
                     Delete
                 </ButtonDanger>
-            </div>
-            <div className="mt-6 flex items-center space-x-4">
-                <Link href={`/tree/${type}?id=${id}`}>
-                    <ButtonSecondary>戻る</ButtonSecondary>
-                </Link>
             </div>
         </>
     )

@@ -5,6 +5,7 @@ import ButtonPrimary from '@/Components/ButtonPrimary'
 import Label from '@/Components/Label'
 import Input from '@/Components/Input'
 import RadioButton from '@/Components/RadioButton'
+import ButtonSecondary from '@/Components/ButtonSecondary'
 
 export interface CardEditInterface {
     type: string
@@ -92,9 +93,9 @@ export function Form({ selected, cardEdit, cardDisplay, close }: FormProps) {
         <form className="m-4" onSubmit={submitFormChanges}>
             {!selected.datum.to_add && (
                 <div className="flex justify-end">
-                    <ButtonDanger className="rounded-full p-2" onClick={deletePerson}>
-                        <img src="/img/delete.svg" alt="" />
-                    </ButtonDanger>
+                    <ButtonSecondary className="rounded-full p-2" onClick={close}>
+                        ✕
+                    </ButtonSecondary>
                 </div>
             )}
             <div>
@@ -151,8 +152,12 @@ export function Form({ selected, cardEdit, cardDisplay, close }: FormProps) {
                 ))}
                 {selected.relType == 'son' || (selected.relType == 'daughter' && otherParentSelect())}
             </div>
-            <div>
+            <div className="flex justify-between">
                 <ButtonPrimary>Submit</ButtonPrimary>
+                <ButtonDanger className="rounded-full p-2" onClick={deletePerson}>
+                    <img src="/img/delete.svg" alt="" />
+                    削除
+                </ButtonDanger>
             </div>
         </form>
     )
