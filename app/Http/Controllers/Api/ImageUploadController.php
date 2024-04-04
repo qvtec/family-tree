@@ -18,12 +18,13 @@ class ImageUploadController extends Controller
             $fileData = base64_decode($split, true);
             $finfo = finfo_open(FILEINFO_MIME_TYPE);
 
-            assert(is_resource($finfo));
+            // assert(is_resource($finfo));
             $fileType = finfo_buffer($finfo, $fileData);
             $extension = $fileType == 'image/png' ? 'png' : 'jpg';
 
             $imageName = time().'.'.$extension;
-            Storage::putFileAs('uploads', $image, $imageName);
+            // Storage::putFileAs('uploads', $image, $imageName);
+            Storage::put('uploads/' . $imageName, $fileData);
             return response()->json([
                 'success' => true,
                 'image_url' => asset('images/' . $imageName)

@@ -44,9 +44,9 @@ export default function DetailShowPage({ id, type, data, onShowEdit }: Props) {
             </dl>
             <dl>
                 <dt className="mb-2 font-semibold leading-none text-gray-900">詳細</dt>
-                <dd className="mb-4 font-light sm:mb-5">
+                <dd className="ql-snow mb-4 font-light sm:mb-5">
                     <div
-                        className="editor-contents"
+                        className="editor-contents ql-editor"
                         dangerouslySetInnerHTML={{ __html: data.contents?.contents ?? '' }}
                     />
                 </dd>
