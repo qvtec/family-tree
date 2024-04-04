@@ -39,7 +39,13 @@ export interface Family {
     relation: string | null
     memo: string | null
     tags: string[]
-    contents: string | null
+    contents?: FamilyContents | null
+}
+
+export interface FamilyContents {
+    id: number
+    family_id: number
+    contents: string
 }
 
 export interface FamilyChart {

@@ -25,11 +25,18 @@ class Family extends Model
         'relation',
         'memo',
         'tags',
-        'contents',
     ];
 
     protected $casts = [
         'types' => 'array',
         'pids' => 'array',
     ];
+
+    /**
+     * 詳細コンテンツ
+     */
+    public function contents()
+    {
+        return $this->hasOne(FamilyContents::class, 'family_id');
+    }
 }

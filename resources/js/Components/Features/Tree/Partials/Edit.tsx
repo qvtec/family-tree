@@ -101,7 +101,7 @@ export default function DetailEditPage({ id, type, data, onHideEdit }: Props) {
     return (
         <>
             <div className="mb-4 w-full bg-white">
-                <div id="editor" dangerouslySetInnerHTML={{ __html: data.contents ?? '' }} />
+                <div id="editor" dangerouslySetInnerHTML={{ __html: data.contents?.contents ?? '' }} />
             </div>
             <ButtonPrimary type="button" onClick={handleSubmit}>
                 保存

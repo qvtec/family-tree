@@ -35,7 +35,7 @@ class FamilyRepository
     */
     public static function show(int $id)
     {
-        return Family::findOrFail($id);
+        return Family::with('contents')->findOrFail($id);
     }
 
     /**
@@ -54,8 +54,18 @@ class FamilyRepository
     */
     public static function update(array $data, int $id)
     {
-        $record = Family::find($id);
-        return $record->update($data);
+        $record = Family::with('contents')->find($id);
+        $res = $record->update($data);
+        if ($record->contents) {
+            $record->contents->contents = $data['contents'];
+            $record->contents->save();
+        } else {
+            $record->contents()->create([
+                'family_id' => $record->id,
+                'contents' => $data['contents'],
+            ]);
+        }
+        return $res;
     }
 
     /**

@@ -1,10 +1,7 @@
 import { Family } from '@/types'
-import { useEffect, useState } from 'react'
 
 import ButtonDanger from '@/Components/ButtonDanger'
 import ButtonPrimary from '@/Components/ButtonPrimary'
-import ButtonSecondary from '@/Components/ButtonSecondary'
-import { Link } from '@inertiajs/react'
 import { remove } from '@/utils/api'
 
 interface Props {
@@ -48,7 +45,10 @@ export default function DetailShowPage({ id, type, data, onShowEdit }: Props) {
             <dl>
                 <dt className="mb-2 font-semibold leading-none text-gray-900">詳細</dt>
                 <dd className="mb-4 font-light sm:mb-5">
-                    <div className="editor-contents" dangerouslySetInnerHTML={{ __html: data.contents ?? '' }} />
+                    <div
+                        className="editor-contents"
+                        dangerouslySetInnerHTML={{ __html: data.contents?.contents ?? '' }}
+                    />
                 </dd>
             </dl>
             <div className="flex items-center space-x-4">
