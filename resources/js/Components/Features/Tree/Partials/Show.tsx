@@ -4,6 +4,8 @@ import ButtonDanger from '@/Components/ButtonDanger'
 import ButtonPrimary from '@/Components/ButtonPrimary'
 import { remove } from '@/utils/api'
 
+import './quill-editor.scss'
+
 interface Props {
     id: number
     type: string
@@ -30,6 +32,10 @@ export default function DetailShowPage({ id, type, data, onShowEdit }: Props) {
 
     return (
         <>
+            <p className="mb-4 text-sm font-extrabold leading-none text-gray-900 md:text-lg">
+                {data.birth}
+                {data.death && ` ~ ${data.death}`}
+            </p>
             <dl className="flex items-center space-x-6">
                 <div>
                     <dd className="mb-4 font-light text-gray-500 sm:mb-5">{data.gender ?? '不明'}</dd>

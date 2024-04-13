@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import f3 from 'family-chart/dist/family-chart'
 import { FamilyChart } from '@/types'
-import { CardEditProps, Form } from './elements/Form'
+import { CardEditProps } from './elements/Form'
 import Modal from '@/Components/Modal'
 
 import './family-chart.scss'
@@ -25,9 +25,6 @@ export default function FamilyChartComponent(props: Props) {
     const [treeType, setTreeType] = useState<TreeType>('vertical')
     const [selected, setSelected] = useState<CardEditProps>()
 
-    const cardDisplay = getCardDisplay()
-    const cardEdit = getCardEditParams()
-
     useEffect(() => {
         if (cont.current === null || props.data.length == 0) return
 
@@ -35,6 +32,7 @@ export default function FamilyChartComponent(props: Props) {
         let separation = { node: 80, level: 200 }
         let editIcon = DetailIcon({ cardDim, x: cardDim.w - 28, y: cardDim.h - 24 }).template
         let addIcon = PlusIcon({ cardDim, x: cardDim.w - 26, y: cardDim.h - 20 }).template
+
         switch (treeType) {
             case 'wide':
                 cardDim = { w: 220, h: 70, text_x: 75, text_y: 15, img_w: 60, img_h: 60, img_x: 5, img_y: 5 }
@@ -43,14 +41,19 @@ export default function FamilyChartComponent(props: Props) {
                 addIcon = PlusIcon({ cardDim, x: cardDim.w - 26, y: cardDim.h - 20 }).template
                 break
             case 'vertical':
-                cardDim = { w: 40, h: 160, text_x: 8, text_y: 5, img_w: 0, img_h: 0, img_x: 0, img_y: 0 }
-                separation = { node: 80, level: 200 }
-                editIcon = DetailIcon({ cardDim, x: cardDim.w - 28, y: cardDim.h - 24 }).template
                 addIcon = '<g></g>'
                 break
             default:
                 break
         }
+
+        const cardDisplay = getCardDisplay()
+        const cardEdit = [
+            { type: 'text', placeholder: 'first name', key: 'first_name' },
+            { type: 'text', placeholder: 'last name', key: 'last_name' },
+            { type: 'text', placeholder: 'birthday', key: 'birthday' },
+            { type: 'text', placeholder: 'avatar', key: 'avatar' },
+        ]
 
         const store = f3.createStore({
             data: props.data,
@@ -89,25 +92,19 @@ export default function FamilyChartComponent(props: Props) {
         store.update.tree({ initial: true })
 
         function cardEditForm(props: CardEditProps) {
-            console.log(props)
-            setSelected(props)
-            // onClickDetail(props.datum.id)
-            setShowEdit(true)
+            if (props.datum.to_add) {
+                console.log('新規登録...')
+            } else {
+                setSelected(props)
+                // onClickDetail(props.datum.id)
+                setShowEdit(true)
+            }
         }
     }, [treeType, cont, props.data])
 
-    function getCardEditParams() {
-        return [
-            { type: 'text', placeholder: 'first name', key: 'first_name' },
-            { type: 'text', placeholder: 'last name', key: 'last_name' },
-            { type: 'text', placeholder: 'birthday', key: 'birthday' },
-            { type: 'text', placeholder: 'avatar', key: 'avatar' },
-        ]
-    }
-
     function getCardDisplay() {
-        const d1 = (d: FamilyChart) => `${d.data['first_name'] || ''} ${d.data['last_name'] || ''}`
-        d1.create_form = '{first name} {last name}'
+        const d1 = (d: FamilyChart) => `${d.data['first_name'] || ''} ${d.data['contents_exist'] ? '●' : ''}`
+        d1.create_form = '{first name}'
         return [d1]
     }
 

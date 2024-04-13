@@ -1,13 +1,17 @@
 import { Family } from '@/types'
 
-import { useEffect, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import ButtonSecondary from '@/Components/ButtonSecondary'
 import ButtonPrimary from '@/Components/ButtonPrimary'
 import { api } from '@/utils/api'
 
 import Quill from 'quill'
-import 'quill/dist/quill.core.css'
+// import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
+import './quill-editor.scss'
+import Label from '@/Components/Label'
+import Input from '@/Components/Input'
+import RadioButton from '@/Components/RadioButton'
 
 const toolbarOptions = [
     ['bold', 'italic', 'underline', 'strike'], // toggled buttons
@@ -37,6 +41,13 @@ interface Props {
 
 export default function DetailEditPage({ id, type, data, onHideEdit }: Props) {
     const [editorText, setEditorText] = useState('')
+    const [editForm, setEditForm] = useState({
+        birth: data.birth,
+        death: data.death,
+        gender: data.gender,
+        en: data.en,
+        memo: data.memo,
+    })
 
     useEffect(() => {
         const quill = new Quill('#editor', {
@@ -69,7 +80,11 @@ export default function DetailEditPage({ id, type, data, onHideEdit }: Props) {
 
     function handleSubmit() {
         async function postData() {
-            await api(route('admin.tree.update', id), { method: 'PUT', body: { contents: editorText } })
+            const body = {
+                ...editForm,
+                contents: editorText,
+            }
+            await api(route('admin.tree.update', id), { method: 'PUT', body })
             onHideEdit()
         }
         postData()
@@ -96,13 +111,116 @@ export default function DetailEditPage({ id, type, data, onHideEdit }: Props) {
             })
     }
 
+    function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
+        const { name, value } = e.target
+        setEditForm({ ...editForm, [name]: value })
+    }
+
     if (!data) return null
 
     return (
         <>
-            <div className="mb-4 w-full bg-white">
-                <div id="editor" dangerouslySetInnerHTML={{ __html: data.contents?.contents ?? '' }} />
-            </div>
+            <dl className="flex items-center space-x-6">
+                <div>
+                    <dd className="mb-4 font-light text-gray-500 sm:mb-5">
+                        <Label htmlFor="birth">birth</Label>
+                        <Input
+                            type="text"
+                            name="birth"
+                            value={editForm?.birth ?? ''}
+                            className="mt-1 block w-full"
+                            onChange={handleInputChange}
+                        />
+                    </dd>
+                </div>
+                <div>
+                    <dd className="mb-4 font-light text-gray-500 sm:mb-5">
+                        <Label htmlFor="death">death</Label>
+                        <Input
+                            type="text"
+                            name="death"
+                            value={editForm?.death ?? ''}
+                            className="mt-1 block w-full"
+                            onChange={handleInputChange}
+                        />
+                    </dd>
+                </div>
+            </dl>
+            <dl className="flex items-center space-x-6">
+                <div>
+                    <dd className="mb-4 font-light text-gray-500 sm:mb-5">
+                        <Label htmlFor="role">Gender</Label>
+                        <div className="mb-4 flex items-center">
+                            <div className="mr-4">
+                                <RadioButton
+                                    id="genderM"
+                                    value="M"
+                                    name="gender"
+                                    checked={editForm?.gender == 'M'}
+                                    onChange={handleInputChange}
+                                />
+                                <label htmlFor="genderM" className="ms-2 text-sm font-medium text-gray-900">
+                                    male
+                                </label>
+                            </div>
+                            <div className="mr-4">
+                                <RadioButton
+                                    id="genderF"
+                                    value="F"
+                                    name="gender"
+                                    checked={editForm?.gender == 'F'}
+                                    onChange={handleInputChange}
+                                />
+                                <label htmlFor="genderF" className="ms-2 text-sm font-medium text-gray-900">
+                                    female
+                                </label>
+                            </div>
+                            <div className="mr-4">
+                                <RadioButton
+                                    id="genderO"
+                                    value="O"
+                                    name="gender"
+                                    checked={editForm?.gender == 'O'}
+                                    onChange={handleInputChange}
+                                />
+                                <label htmlFor="genderO" className="ms-2 text-sm font-medium text-gray-900">
+                                    other
+                                </label>
+                            </div>
+                        </div>
+                    </dd>
+                </div>
+                <div>
+                    <dd className="mb-4 font-light text-gray-500 sm:mb-5">
+                        <Label htmlFor="en">en</Label>
+                        <Input
+                            type="text"
+                            name="en"
+                            value={editForm?.en ?? ''}
+                            className="mt-1 block w-full"
+                            onChange={handleInputChange}
+                        />
+                    </dd>
+                </div>
+            </dl>
+            <dl>
+                <dt className="mb-2 font-semibold leading-none text-gray-900">概要</dt>
+                <dd className="mb-4 font-light text-gray-500 sm:mb-5">
+                    <Input
+                        type="text"
+                        name="memo"
+                        value={editForm?.memo ?? ''}
+                        className="mt-1 block w-full"
+                        onChange={handleInputChange}
+                    />
+                </dd>
+            </dl>
+            <dl>
+                <dt className="mb-2 font-semibold leading-none text-gray-900">詳細</dt>
+                <dd className="ql-snow mb-4 font-light sm:mb-5">
+                    <div id="editor" dangerouslySetInnerHTML={{ __html: data.contents?.contents ?? '' }} />
+                </dd>
+            </dl>
             <ButtonPrimary type="button" onClick={handleSubmit}>
                 保存
             </ButtonPrimary>

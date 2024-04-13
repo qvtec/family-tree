@@ -25,7 +25,7 @@ class FamilyRepository
      */
     public static function search(string $type)
     {
-        $list = Family::whereJsonContains('types', $type)->orderBy('id')->take(600)->get();
+        $list = Family::with('contents')->whereJsonContains('types', $type)->orderBy('id')->take(600)->get();
         return FamilyRepository::formatTreeData($list);
     }
 
@@ -56,14 +56,18 @@ class FamilyRepository
     {
         $record = Family::with('contents')->find($id);
         $res = $record->update($data);
-        if ($record->contents) {
-            $record->contents->contents = $data['contents'];
-            $record->contents->save();
-        } else {
-            $record->contents()->create([
-                'family_id' => $record->id,
-                'contents' => $data['contents'],
-            ]);
+
+        if ($data['contents']) {
+            $contents = str_replace('<p></p>', '<p><br /></p>', $data['contents']);
+            if ($record->contents) {
+                $record->contents->contents = $contents;
+                $record->contents->save();
+            } else {
+                $record->contents()->create([
+                    'family_id' => $record->id,
+                    'contents' => $contents,
+                ]);
+            }
         }
         return $res;
     }
@@ -109,15 +113,21 @@ class FamilyRepository
             if ($father !== null) $rels['father'] = strval($item->fid);
             if ($mother !== null) $rels['mother'] = strval($item->mid);
 
+            $contents_exist = false;
+            if ($item->contents()->exists() && !empty($item->contents->contents)) {
+                $contents_exist = true;
+            }
+
             $data[] = [
                 'id' => strval($item->id),
                 'rels' => $rels,
                 'data' => [
                     'first_name' => $item->name,
-                    'last_name' => '',
+                    'last_name' => $contents_exist,
                     'birthday' => $item->birth,
                     'avatar' => '',
                     'gender' => $gender,
+                    'contents_exist' => $contents_exist,
                 ]
             ];
         }
