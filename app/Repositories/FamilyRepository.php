@@ -103,10 +103,6 @@ class FamilyRepository
             })->pluck('id');
             $childrenIds = array_map('strval', $childlen->toArray());
 
-            $gender = 'O';
-            if ($item->gender == 'male') $gender = 'M';
-            if ($item->gender == 'female') $gender = 'F';
-
             $rels = [];
             if ($item->pids) $rels['spouses'] = array_map('strval', $item->pids);
             if (!$childlen->isEmpty()) $rels['children'] = $childrenIds;
@@ -126,7 +122,7 @@ class FamilyRepository
                     'last_name' => $contents_exist,
                     'birthday' => $item->birth,
                     'avatar' => '',
-                    'gender' => $gender,
+                    'gender' => $item->gender,
                     'contents_exist' => $contents_exist,
                 ]
             ];
