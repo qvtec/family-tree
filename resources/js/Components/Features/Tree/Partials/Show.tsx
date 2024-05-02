@@ -28,7 +28,7 @@ export default function DetailShowPage({ id, type, data, onShowEdit }: Props) {
         }
     }
 
-    function gender(type: string = '') {
+    function gender(type: string) {
         switch (type) {
             case 'M':
                 return 'male'
@@ -49,7 +49,7 @@ export default function DetailShowPage({ id, type, data, onShowEdit }: Props) {
             </p>
             <dl className="flex items-center space-x-6">
                 <div>
-                    <dd className="mb-4 font-light text-gray-500 sm:mb-5">{gender(data.gender) ?? '不明'}</dd>
+                    <dd className="mb-4 font-light text-gray-500 sm:mb-5">{gender(data.gender ?? '')}</dd>
                 </div>
                 <div>
                     <dd className="mb-4 font-light text-gray-500 sm:mb-5">{data.en}</dd>
