@@ -103,7 +103,7 @@ export default function FamilyChartComponent(props: Props) {
     }, [treeType, cont, props.data])
 
     function getCardDisplay() {
-        const d1 = (d: FamilyChart) => `${d.data['first_name'] || ''} ${d.data['contents_exist'] ? '●' : ''}`
+        const d1 = (d: FamilyChart) => `${d.data['first_name'] || ''}${d.data['contents_exist'] ? '📖' : ''}`
         d1.create_form = '{first name}'
         return [d1]
     }
