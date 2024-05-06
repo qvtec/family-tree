@@ -98,7 +98,7 @@ class FamilyRepository
             });
 
             $childlen = $list->filter(function ($child) use ($item) {
-                $parentId = $item->gender == 'male' ? $child->fid : $child->mid;
+                $parentId = $item->gender == 'M' ? $child->fid : $child->mid;
                 return $parentId === $item->id;
             })->pluck('id');
             $childrenIds = array_map('strval', $childlen->toArray());
