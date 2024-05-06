@@ -7,7 +7,7 @@
         <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
         <link rel="icon" href="/favicon.ico" sizes="48x48">
-        <link rel="apple-touch-icon" href="/pwa-192x192.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 
         <link rel="manifest" href="/build/manifest.webmanifest">
         <script id="vite-plugin-pwa:register-sw" src="/build/registerSW.js"></script>
