@@ -29,8 +29,8 @@ return new class extends Migration
             $table->string('memo')->nullable();
             $table->json('tags')->nullable();
             $table->text('contents')->nullable();
-            $table->string('create_by')->nullable();
-            $table->string('update_by')->nullable();
+            $table->unsignedInteger('create_by')->nullable();
+            $table->unsignedInteger('update_by')->nullable();
             $table->timestamps();
         });
     }

@@ -43,6 +43,8 @@ export default function DetailShowPage({ id, type, data, onShowEdit }: Props) {
 
     return (
         <>
+            <p className="text-sm leading-none text-gray-500 md:text-sm">{data.yomi}</p>
+            <h2 className="mb-2 text-xl font-semibold leading-none text-gray-900 md:text-2xl">{data.name}</h2>
             <p className="mb-4 text-sm font-extrabold leading-none text-gray-900 md:text-lg">
                 {data.birth}
                 {data.death && ` ~ ${data.death}`}

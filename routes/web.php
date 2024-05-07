@@ -34,8 +34,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/images/{filename}', [ImageController::class, 'getImage'])->name('image.get');
 
     Route::middleware('admin')->prefix('admin')->name('admin.')->group(function() {
-        Route::get('/user', function () {
-            return Inertia::render('Admin/User');
-        })->name('user');
+        Route::get('/user', function () { return Inertia::render('Admin/User'); })->name('user');
+        Route::get('/history', function () { return Inertia::render('Admin/History'); })->name('history');
     });
 });

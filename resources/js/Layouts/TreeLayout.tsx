@@ -12,9 +12,9 @@ export default function TreeLayout({ user, title, children }: PropsWithChildren<
     return (
         <div className="min-h-screen">
             <MenuProvider>
-                <Navbar user={user} className="hidden sm:block" />
+                <Navbar user={user} />
                 <Head title={title} />
-                <main className="sm:pt-12">{children}</main>
+                <main className="pt-14 md:pt-12">{children}</main>
                 <ToastContainer transition={Slide} />
             </MenuProvider>
         </div>

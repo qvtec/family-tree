@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import f3 from 'family-chart/dist/family-chart'
 import { FamilyChart } from '@/types'
-import { CardEditProps } from './elements/Form'
 import Modal from '@/Components/Modal'
 
 import './family-chart.scss'
@@ -16,7 +15,16 @@ interface Props {
     id?: number
     type: string
     data: FamilyChart[]
-    onClickDetail: (id: number) => void
+}
+
+interface CardEditProps {
+    datum: {
+        to_add: any
+    }
+    relDatum: FamilyChart
+    store: any
+    relType?: string // mather,father,daughter,son...
+    postSubmit: any
 }
 
 export default function FamilyChartComponent(props: Props) {
@@ -96,24 +104,21 @@ export default function FamilyChartComponent(props: Props) {
                 console.log('新規登録...')
             } else {
                 setSelected(props)
-                // onClickDetail(props.datum.id)
                 setShowEdit(true)
             }
         }
     }, [treeType, cont, props.data])
 
     function getCardDisplay() {
-        const d1 = (d: FamilyChart) => `${d.data['first_name'] || ''}${d.data['contents_exist'] ? '📖' : ''}`
-        d1.create_form = '{first name}'
-        return [d1]
+        const d1 = (d: FamilyChart) => `${d.data['first_name'] || ''}${d.data['contents_exist'] ? ' 📒' : ''}`
+        const d2 = (d: FamilyChart) => `${treeType == 'vertical' ? '' : d.data['birthday'] || ''}`
+        // d1.create_form = '{first name}'
+        // d2.create_form = '{birthday}'
+        return [d1, d2]
     }
 
     function handleClose() {
         setShowEdit(false)
-    }
-
-    function onClickDetail(id: number) {
-        props.onClickDetail(id)
     }
 
     function changeTreeType(treeType: TreeType) {

@@ -9,7 +9,7 @@ interface MenuProps {
 
 export default function MenuComponent({ changeTreeType }: MenuProps) {
     return (
-        <div className="fixed right-4 top-4 w-56 text-right md:right-10 md:top-16">
+        <div className="fixed right-4 top-16 w-56 text-right md:right-10 md:top-16">
             <Menu as="div" className="relative inline-block text-left">
                 <div>
                     <Menu.Button className="inline-flex w-full justify-center rounded-md bg-black/20 px-4 py-2 text-sm font-medium text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">

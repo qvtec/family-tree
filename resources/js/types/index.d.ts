@@ -69,3 +69,12 @@ export interface FamilyChartData {
     gender: string
     contents_exist: boolean
 }
+
+export interface History {
+    id: number
+    family_id: number
+    changes: string
+    user_id: number
+    created_at: string
+    updated_at: string
+}

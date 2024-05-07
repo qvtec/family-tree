@@ -15,6 +15,7 @@ export default function Home({ auth }: PageProps) {
     const adminMenu = [
         { name: '全員', href: `/tree/all?id=${auth.user.family_id}` },
         { name: 'ユーザ管理', href: `/admin/user` },
+        { name: '変更履歴', href: `/admin/history` },
     ]
 
     useEffect(() => {

@@ -42,6 +42,8 @@ interface Props {
 export default function DetailEditPage({ id, type, data, onHideEdit }: Props) {
     const [editorText, setEditorText] = useState('')
     const [editForm, setEditForm] = useState({
+        name: data.name,
+        yomi: data.yomi,
         birth: data.birth,
         death: data.death,
         gender: data.gender,
@@ -120,6 +122,42 @@ export default function DetailEditPage({ id, type, data, onHideEdit }: Props) {
 
     return (
         <>
+            <dl>
+                <dt className="mb-2 font-semibold leading-none text-gray-900">name</dt>
+                <dd className="mb-4 font-light text-gray-500 sm:mb-5">
+                    <Input
+                        type="text"
+                        name="name"
+                        value={editForm?.name ?? ''}
+                        className="mt-1 block w-full"
+                        onChange={handleInputChange}
+                    />
+                </dd>
+            </dl>
+            <dl>
+                <dt className="mb-2 font-semibold leading-none text-gray-900">yomi</dt>
+                <dd className="mb-4 font-light text-gray-500 sm:mb-5">
+                    <Input
+                        type="text"
+                        name="yomi"
+                        value={editForm?.yomi ?? ''}
+                        className="mt-1 block w-full"
+                        onChange={handleInputChange}
+                    />
+                </dd>
+            </dl>
+            <dl>
+                <dt className="mb-2 font-semibold leading-none text-gray-900">en</dt>
+                <dd className="mb-4 font-light text-gray-500 sm:mb-5">
+                    <Input
+                        type="text"
+                        name="en"
+                        value={editForm?.en ?? ''}
+                        className="mt-1 block w-full"
+                        onChange={handleInputChange}
+                    />
+                </dd>
+            </dl>
             <dl className="flex items-center space-x-6">
                 <div>
                     <dd className="mb-4 font-light text-gray-500 sm:mb-5">
@@ -147,61 +185,47 @@ export default function DetailEditPage({ id, type, data, onHideEdit }: Props) {
                 </div>
             </dl>
             <dl className="flex items-center space-x-6">
-                <div>
-                    <dd className="mb-4 font-light text-gray-500 sm:mb-5">
-                        <Label htmlFor="role">Gender</Label>
-                        <div className="mb-4 flex items-center">
-                            <div className="mr-4">
-                                <RadioButton
-                                    id="genderM"
-                                    value="M"
-                                    name="gender"
-                                    checked={editForm?.gender == 'M'}
-                                    onChange={handleInputChange}
-                                />
-                                <label htmlFor="genderM" className="ms-2 text-sm font-medium text-gray-900">
-                                    male
-                                </label>
-                            </div>
-                            <div className="mr-4">
-                                <RadioButton
-                                    id="genderF"
-                                    value="F"
-                                    name="gender"
-                                    checked={editForm?.gender == 'F'}
-                                    onChange={handleInputChange}
-                                />
-                                <label htmlFor="genderF" className="ms-2 text-sm font-medium text-gray-900">
-                                    female
-                                </label>
-                            </div>
-                            <div className="mr-4">
-                                <RadioButton
-                                    id="genderO"
-                                    value="O"
-                                    name="gender"
-                                    checked={editForm?.gender == 'O'}
-                                    onChange={handleInputChange}
-                                />
-                                <label htmlFor="genderO" className="ms-2 text-sm font-medium text-gray-900">
-                                    other
-                                </label>
-                            </div>
+                <dd className="mb-4 font-light text-gray-500 sm:mb-5">
+                    <Label htmlFor="role">Gender</Label>
+                    <div className="mb-4 flex items-center">
+                        <div className="mr-4">
+                            <RadioButton
+                                id="genderM"
+                                value="M"
+                                name="gender"
+                                checked={editForm?.gender == 'M'}
+                                onChange={handleInputChange}
+                            />
+                            <label htmlFor="genderM" className="ms-2 text-sm font-medium text-gray-900">
+                                male
+                            </label>
                         </div>
-                    </dd>
-                </div>
-                <div>
-                    <dd className="mb-4 font-light text-gray-500 sm:mb-5">
-                        <Label htmlFor="en">en</Label>
-                        <Input
-                            type="text"
-                            name="en"
-                            value={editForm?.en ?? ''}
-                            className="mt-1 block w-full"
-                            onChange={handleInputChange}
-                        />
-                    </dd>
-                </div>
+                        <div className="mr-4">
+                            <RadioButton
+                                id="genderF"
+                                value="F"
+                                name="gender"
+                                checked={editForm?.gender == 'F'}
+                                onChange={handleInputChange}
+                            />
+                            <label htmlFor="genderF" className="ms-2 text-sm font-medium text-gray-900">
+                                female
+                            </label>
+                        </div>
+                        <div className="mr-4">
+                            <RadioButton
+                                id="genderO"
+                                value="O"
+                                name="gender"
+                                checked={editForm?.gender == 'O'}
+                                onChange={handleInputChange}
+                            />
+                            <label htmlFor="genderO" className="ms-2 text-sm font-medium text-gray-900">
+                                other
+                            </label>
+                        </div>
+                    </div>
+                </dd>
             </dl>
             <dl>
                 <dt className="mb-2 font-semibold leading-none text-gray-900">概要</dt>

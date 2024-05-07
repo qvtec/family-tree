@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->integer('family_id')->nullable();
             $table->text('contents')->nullable();
+            $table->unsignedInteger('create_by')->nullable();
+            $table->unsignedInteger('update_by')->nullable();
             $table->timestamps();
         });
 

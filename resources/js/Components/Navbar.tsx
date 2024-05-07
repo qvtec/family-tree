@@ -19,7 +19,7 @@ export default function Navbar({ user, className = '' }: { user: User; className
                         width={54}
                         height={54}
                     />
-                    <span className="self-center whitespace-nowrap text-2xl font-semibold">My Family Tree</span>
+                    <span className="self-center whitespace-nowrap text-2xl font-semibold">Family Tree</span>
                 </Link>
                 <div className="flex items-center space-x-3 md:order-2 md:space-x-0 rtl:space-x-reverse">
                     <span className="text-white">{user.name}</span>
