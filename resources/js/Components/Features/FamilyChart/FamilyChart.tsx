@@ -19,6 +19,7 @@ interface Props {
 
 interface CardEditProps {
     datum: {
+        id: number
         to_add: any
     }
     relDatum: FamilyChart
