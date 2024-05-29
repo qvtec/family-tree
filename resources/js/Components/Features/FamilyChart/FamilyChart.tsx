@@ -8,6 +8,7 @@ import MenuComponent from './elements/Menu'
 import { DetailIcon, PlusIcon } from './elements/Icon'
 import TreeDetailComponents from '../Tree/Detail'
 import ButtonSecondary from '@/Components/ButtonSecondary'
+import { useCookies } from '@/hooks/useCookies'
 
 export type TreeType = 'wide' | 'vertical'
 
@@ -33,6 +34,13 @@ export default function FamilyChartComponent(props: Props) {
     const [showEdit, setShowEdit] = useState(false)
     const [treeType, setTreeType] = useState<TreeType>('vertical')
     const [selected, setSelected] = useState<CardEditProps>()
+
+    const { setCookie, getCookie } = useCookies()
+
+    useEffect(() => {
+        const treeTypeDefault = getCookie('treeType')
+        if (treeTypeDefault) setTreeType(treeTypeDefault as TreeType)
+    }, [getCookie])
 
     useEffect(() => {
         if (cont.current === null || props.data.length == 0) return
@@ -124,6 +132,7 @@ export default function FamilyChartComponent(props: Props) {
 
     function changeTreeType(treeType: TreeType) {
         setTreeType(treeType)
+        setCookie('treeType', treeType)
     }
 
     return (
