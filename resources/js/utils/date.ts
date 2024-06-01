@@ -30,7 +30,7 @@ export function formatDateTime(value: string, pattern = 'yyyy-MM-dd HH:mm:ss') {
  * @returns
  */
 export function calculateAge(birthday: string) {
-    const birthDate = new Date(birthday)
+    const birthDate = new Date(birthday.replace(/\?/g, ''))
     const today = new Date()
     let age = today.getFullYear() - birthDate.getFullYear()
     const monthDifference = today.getMonth() - birthDate.getMonth()

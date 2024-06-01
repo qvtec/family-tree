@@ -162,7 +162,7 @@ export default function DetailEditPage({ id, data, onHideEdit }: Props) {
                     <dd className="mb-4 font-light text-gray-500 sm:mb-5">
                         <Label htmlFor="birth">birth</Label>
                         <Input
-                            type="text"
+                            type="date"
                             name="birth"
                             value={editForm?.birth ?? ''}
                             className="mt-1 block w-full"
@@ -174,7 +174,7 @@ export default function DetailEditPage({ id, data, onHideEdit }: Props) {
                     <dd className="mb-4 font-light text-gray-500 sm:mb-5">
                         <Label htmlFor="death">death</Label>
                         <Input
-                            type="text"
+                            type="date"
                             name="death"
                             value={editForm?.death ?? ''}
                             className="mt-1 block w-full"
