@@ -18,13 +18,11 @@ export default function DetailShowPage({ id, type, data, onShowEdit }: Props) {
         onShowEdit()
     }
 
-    function onClickDelete() {
-        async function removeData() {
-            await remove(route('admin.tree.destroy', id))
-        }
-        const isConfirmed = window.confirm('本当に削除しますか？')
-        if (isConfirmed) {
-            removeData()
+    async function onClickDelete() {
+        console.log(`/api/tree/${type}/${id}`)
+        if (confirm('本当に削除しますか？')) {
+            await remove(`/api/tree/${type}/${id}`)
+            window.location.reload()
         }
     }
 

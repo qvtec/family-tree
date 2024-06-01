@@ -55,7 +55,7 @@ class Family extends Model
     {
         parent::boot();
 
-        static::creating(function ($model) {
+        static::created(function ($model) {
             $model->create_by = auth()->id();
 
             History::create([
@@ -64,7 +64,7 @@ class Family extends Model
             ]);
         });
 
-        static::updating(function ($model) {
+        static::updated(function ($model) {
             $model->update_by = auth()->id();
 
             History::create([

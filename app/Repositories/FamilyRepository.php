@@ -44,7 +44,13 @@ class FamilyRepository
     */
     public static function store(array $data)
     {
-        return Family::create($data);
+        $res = Family::create($data);
+        if (isset($data['pids']) && count($data['pids']) > 0) {
+            $p = Family::findOrFail($data['pids'][0]);
+            $p->pids = [$res['id']];
+            $p->save();
+        }
+        return $res;
     }
 
     /**
@@ -121,6 +127,7 @@ class FamilyRepository
                     'first_name' => $item->name,
                     'last_name' => $contents_exist,
                     'birthday' => $item->birth,
+                    'deathday' => $item->death,
                     'avatar' => '',
                     'gender' => $item->gender,
                     'contents_exist' => $contents_exist,

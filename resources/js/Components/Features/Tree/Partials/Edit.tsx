@@ -34,12 +34,11 @@ const toolbarOptions = [
 
 interface Props {
     id: number
-    type: string
     data: Family
     onHideEdit: () => void
 }
 
-export default function DetailEditPage({ id, type, data, onHideEdit }: Props) {
+export default function DetailEditPage({ id, data, onHideEdit }: Props) {
     const [editorText, setEditorText] = useState('')
     const [editForm, setEditForm] = useState({
         name: data.name,

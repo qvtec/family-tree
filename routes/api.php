@@ -31,7 +31,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::prefix('tree/{type}')->name('tree.')->group(function() {
         Route::get('/', [FamilyController::class, 'index'])->name('index');
+        Route::post('/', [FamilyController::class, 'store'])->name('store');
         Route::get('/{id}', [FamilyController::class, 'show'])->name('show');
+        Route::delete('/{id}', [FamilyController::class, 'destroy'])->name('destroy');
         Route::post('/node/update', [FamilyController::class, 'nodeUpdate'])->name('node.update');
     });
 
@@ -45,7 +47,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::prefix('tree')->group(function() {
             Route::post('/', [FamilyController::class, 'store'])->name('tree.store');
             Route::put('/{id}', [FamilyController::class, 'update'])->name('tree.update');
-            Route::delete('/{id}', [FamilyController::class, 'destroy'])->name('tree.destroy');
         });
 
         Route::get('/tree-all', [FamilyController::class, 'all'])->name('tree-all');

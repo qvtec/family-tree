@@ -64,10 +64,17 @@ class FamilyController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int $id)
+    public function destroy(string $type, int $id)
     {
+        $data = FamilyRepository::show($id);
+        $user = auth()->user();
+        if ($user->role != 'admin') {
+            if (!in_array($type, $user->types) || !in_array($type, $data->types ?? [])) {
+                return response()->json(['error' => 'Unauthorized'], 401);
+            }
+        }
         FamilyRepository::delete($id);
-        return response()->json(null, 204);
+        return response()->json($data, 204);
     }
 
     /**

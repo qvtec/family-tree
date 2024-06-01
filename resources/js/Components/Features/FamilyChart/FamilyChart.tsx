@@ -19,15 +19,18 @@ interface Props {
     data: FamilyChart[]
 }
 
-interface CardEditProps {
+export interface CardEditProps {
     datum: {
         id: number
-        to_add: any
+        to_add?: boolean
+        data: {
+            gender: string
+        }
     }
-    relDatum: FamilyChart
-    store: any
-    relType?: string // mather,father,daughter,son...
-    postSubmit: any
+    rel_datum?: FamilyChart
+    rel_type?: string // mather,father,daughter,son...
+    // store: any
+    // postSubmit: any
 }
 
 export default function FamilyChartComponent(props: Props) {
@@ -128,7 +131,8 @@ export default function FamilyChartComponent(props: Props) {
     }
 
     function getDispBirth(d: FamilyChart) {
-        const old = d.data['deathday'] ? '' : ` (${calculateAge(d.data['birthday'])})`
+        if (!d.data['birthday']) return ''
+        const old = !d.data['deathday'] ? ` (${calculateAge(d.data['birthday'])})` : ''
         return d.data['birthday'] + old
     }
 
@@ -151,7 +155,7 @@ export default function FamilyChartComponent(props: Props) {
                             ✕
                         </ButtonSecondary>
                     </div>
-                    {selected && <TreeDetailComponents id={Number(selected.datum.id)} type={props.type} />}
+                    {selected && <TreeDetailComponents cardEditProps={selected} type={props.type} />}
                 </div>
             </Modal>
             <MenuComponent changeTreeType={changeTreeType} />

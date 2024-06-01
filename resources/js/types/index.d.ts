@@ -65,6 +65,7 @@ export interface FamilyChartData {
     first_name: string
     last_name: string
     birthday: string
+    deathday: string
     avatar: string
     gender: string
     contents_exist: boolean

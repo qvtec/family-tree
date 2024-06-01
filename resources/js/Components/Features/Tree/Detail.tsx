@@ -2,32 +2,85 @@ import { Family } from '@/types'
 import { useEffect, useState } from 'react'
 
 import Loading from '@/Components/Loading'
-import { get } from '@/utils/api'
+import { get, post } from '@/utils/api'
 
 import DetailEditPage from './Partials/Edit'
 import DetailShowPage from './Partials/Show'
+import { CardEditProps } from '../FamilyChart/FamilyChart'
+import { FamilyChart } from '@/types'
 
 interface Props {
-    id: number
+    cardEditProps: CardEditProps
     type: string
 }
 
-export default function TreeDetailComponents({ id, type }: Props) {
+export default function TreeDetailComponents({ cardEditProps, type }: Props) {
     const [data, setData] = useState<Family | undefined>(undefined)
     const [loading, setLoading] = useState(true)
     const [showEdit, setShowEdit] = useState(false)
+    const [id, setId] = useState(Number(cardEditProps.datum.id) || 0)
 
     useEffect(() => {
         async function fetchData() {
-            const res = await get<Family>(`/api/tree/${type}/${id}`)
-            if (res) {
-                setData(res)
-                setLoading(false)
+            if (id > 0) {
+                console.log('Detail')
+                const res = await get<Family>(`/api/tree/${type}/${id}`)
+                if (res) {
+                    setData(res)
+                    setLoading(false)
+                }
+            } else {
+                console.log('Add')
+                const { mid, fid, pids } = cardEditProps.rel_datum
+                    ? getRels(cardEditProps.rel_datum)
+                    : { mid: null, fid: null, pids: [] }
+
+                const res = await post<Family>(
+                    `/api/tree/${type}`,
+                    {
+                        name: '未設定',
+                        types: [type],
+                        fid: fid,
+                        mid: mid,
+                        pids: pids,
+                        gender: cardEditProps.datum.data.gender,
+                    },
+                    { isShow: false },
+                )
+                if (res) {
+                    setData(res)
+                    setId(Number(res.id))
+                    setShowEdit(true)
+                    setLoading(false)
+                }
             }
         }
 
+        function getRels(data: FamilyChart) {
+            const rels = data.rels
+            let mid = null
+            let fid = null
+            let pids: number[] = []
+            switch (cardEditProps.rel_type) {
+                case 'son':
+                    mid = data.id
+                    fid = rels.spouses && rels.spouses.length > 0 ? rels.spouses[0] : []
+                    return { mid, fid }
+                case 'daughter':
+                    mid = rels.spouses && rels.spouses.length > 0 ? rels.spouses[0] : []
+                    fid = data.id
+                    break
+                case 'spouses':
+                    pids = [Number(data.id)]
+                    break
+                default:
+                    break
+            }
+            return { mid, fid, pids }
+        }
+
         fetchData()
-    }, [id, showEdit, type])
+    }, [cardEditProps, id, type])
 
     if (loading || !data) return <Loading />
 
@@ -36,7 +89,7 @@ export default function TreeDetailComponents({ id, type }: Props) {
             {!showEdit ? (
                 <DetailShowPage id={id} type={type} data={data} onShowEdit={() => setShowEdit(true)} />
             ) : (
-                <DetailEditPage id={id} type={type} data={data} onHideEdit={() => setShowEdit(false)} />
+                <DetailEditPage id={id} data={data} onHideEdit={() => setShowEdit(false)} />
             )}
         </section>
     )
