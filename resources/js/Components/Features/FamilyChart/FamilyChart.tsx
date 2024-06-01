@@ -9,6 +9,7 @@ import { DetailIcon, PlusIcon } from './elements/Icon'
 import TreeDetailComponents from '../Tree/Detail'
 import ButtonSecondary from '@/Components/ButtonSecondary'
 import { useCookies } from '@/hooks/useCookies'
+import { calculateAge } from '@/utils/date'
 
 export type TreeType = 'wide' | 'vertical'
 
@@ -120,10 +121,15 @@ export default function FamilyChartComponent(props: Props) {
 
     function getCardDisplay() {
         const d1 = (d: FamilyChart) => `${d.data['first_name'] || ''}${d.data['contents_exist'] ? ' 📒' : ''}`
-        const d2 = (d: FamilyChart) => `${treeType == 'vertical' ? '' : d.data['birthday'] || ''}`
+        const d2 = (d: FamilyChart) => `${treeType == 'vertical' ? '' : getDispBirth(d) || ''}`
         // d1.create_form = '{first name}'
         // d2.create_form = '{birthday}'
         return [d1, d2]
+    }
+
+    function getDispBirth(d: FamilyChart) {
+        const old = d.data['deathday'] ? '' : ` (${calculateAge(d.data['birthday'])})`
+        return d.data['birthday'] + old
     }
 
     function handleClose() {
