@@ -29,6 +29,8 @@ Route::middleware('auth')->group(function () {
     })->name('home');
 
     Route::get('/tree/{type}', [FamilyController::class, 'index'])->name('tree');
+    Route::get('/contact', function () { return Inertia::render('Contact'); })->name('contact');
+    Route::get('/chat', function () { return Inertia::render('Chat'); })->name('chat');
     Route::get('/test', function () { return Inertia::render('Test'); })->name('test');
 
     Route::get('/images/{filename}', [ImageController::class, 'getImage'])->name('image.get');

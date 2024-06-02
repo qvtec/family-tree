@@ -64,6 +64,28 @@ export default function Navbar({ user, className = '' }: { user: User; className
                                 </Link>
                             </li>
                         ))}
+                        <li>
+                            <Link
+                                href="/chat"
+                                className={
+                                    'block rounded px-3 py-2 text-white md:p-0' +
+                                    (route().current('home') ? ' text-cyan-500' : ' hover:text-sky-200')
+                                }
+                            >
+                                チャット
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                href="/contact"
+                                className={
+                                    'block rounded px-3 py-2 text-white md:p-0' +
+                                    (route().current('home') ? ' text-cyan-500' : ' hover:text-sky-200')
+                                }
+                            >
+                                お問い合わせ
+                            </Link>
+                        </li>
                     </ul>
                 </div>
             </div>

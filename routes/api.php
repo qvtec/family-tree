@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ContactController;
 use App\Http\Controllers\Api\FamilyController;
 use App\Http\Controllers\Api\FamilyTypesController;
 use App\Http\Controllers\Api\ImageUploadController;
@@ -42,6 +43,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/{type}', [FamilyTypesController::class, 'show'])->name('show');
     });
     Route::get('/user-family-type', [FamilyTypesController::class, 'userFamilyTypes'])->name('type.user');
+
+    Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
 
     Route::middleware('admin')->prefix('admin')->name('admin.')->group(function() {
         Route::prefix('tree')->group(function() {
