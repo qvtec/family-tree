@@ -46,7 +46,7 @@ export default function MessagePage({ auth }: PageProps) {
 
     return (
         <Layout user={auth.user} title="Home">
-            <div className="-mt-8 border-r border-gray-300 md:max-w-xl md:px-4">
+            <div className="-mt-8 h-screen border-r border-gray-300 md:max-w-xl md:px-4">
                 <div className="my-8 p-4">
                     <div className="mb-3 w-full text-center text-sm text-gray-300 underline" onClick={reload}>
                         読み込み

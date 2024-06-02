@@ -35,9 +35,9 @@ export default function ContactPage({ auth }: PageProps) {
     return (
         <Layout user={auth.user} title="Home">
             <div className="px-4">
-                <div className="my-8 p-4">
+                <div className="my-8 px-4">
                     <h1 className="mb-3">お問い合わせ</h1>
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit} className="md:max-w-md">
                         <dl>
                             <dt className="mb-2 font-semibold leading-none text-gray-900">name</dt>
                             <dd className="mb-4 font-light text-gray-500 sm:mb-5">
