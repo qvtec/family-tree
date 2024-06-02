@@ -23,7 +23,7 @@ export default function FamilyTreePage({ auth, type, id }: PageProps<{ type: str
 
     return (
         <TreeLayout user={auth.user} title="Family Tree">
-            <FamilyChartComponent id={id} type={type} data={data} />
+            <FamilyChartComponent user={auth.user} id={id} type={type} data={data} />
         </TreeLayout>
     )
 }

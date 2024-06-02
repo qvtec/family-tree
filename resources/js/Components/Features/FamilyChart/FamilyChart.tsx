@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import f3 from 'family-chart/dist/family-chart'
-import { FamilyChart } from '@/types'
+import { FamilyChart, User } from '@/types'
 import Modal from '@/Components/Modal'
 
 import './family-chart.scss'
@@ -14,6 +14,7 @@ import { calculateAge } from '@/utils/date'
 export type TreeType = 'wide' | 'vertical'
 
 interface Props {
+    user: User
     id?: number
     type: string
     data: FamilyChart[]
@@ -83,11 +84,12 @@ export default function FamilyChartComponent(props: Props) {
             { type: 'text', placeholder: 'avatar', key: 'avatar' },
         ]
 
+        const mainId = props.id ? props.data.find((item) => Number(item.id) == props.id)?.id : null
         const store = f3.createStore({
             data: props.data,
             node_separation: separation.node,
             level_separation: separation.level,
-            main_id: props.id,
+            main_id: mainId,
         })
         const view = f3.d3AnimationView({
             store,
@@ -170,7 +172,7 @@ export default function FamilyChartComponent(props: Props) {
                     {selected && <TreeDetailComponents cardEditProps={selected} type={props.type} />}
                 </div>
             </Modal>
-            <MenuComponent changeTreeType={changeTreeType} />
+            <MenuComponent user={props.user} type={props.type} changeTreeType={changeTreeType} />
         </>
     )
 }
