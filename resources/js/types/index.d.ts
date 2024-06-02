@@ -80,3 +80,11 @@ export interface History {
     created_at: string
     updated_at: string
 }
+
+export interface Message {
+    id: number
+    user: number
+    message: string
+    created_at: string
+    updated_at: string
+}

@@ -66,13 +66,13 @@ export default function Navbar({ user, className = '' }: { user: User; className
                         ))}
                         <li>
                             <Link
-                                href="/chat"
+                                href="/message"
                                 className={
                                     'block rounded px-3 py-2 text-white md:p-0' +
-                                    (route().current('home') ? ' text-cyan-500' : ' hover:text-sky-200')
+                                    (route().current('message') ? ' text-cyan-500' : ' hover:text-sky-200')
                                 }
                             >
-                                チャット
+                                メッセージ
                             </Link>
                         </li>
                         <li>
@@ -80,7 +80,7 @@ export default function Navbar({ user, className = '' }: { user: User; className
                                 href="/contact"
                                 className={
                                     'block rounded px-3 py-2 text-white md:p-0' +
-                                    (route().current('home') ? ' text-cyan-500' : ' hover:text-sky-200')
+                                    (route().current('contact') ? ' text-cyan-500' : ' hover:text-sky-200')
                                 }
                             >
                                 お問い合わせ

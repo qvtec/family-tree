@@ -55,9 +55,16 @@ class Family extends Model
     {
         parent::boot();
 
-        static::created(function ($model) {
-            $model->create_by = auth()->id();
 
+        static::creating(function ($model) {
+            $model->create_by = auth()->id();
+        });
+
+        static::updating(function ($model) {
+            $model->update_by = auth()->id();
+        });
+
+        static::created(function ($model) {
             History::create([
                 'family_id' => $model->id,
                 'changes' => json_encode($model->toArray()),
@@ -65,8 +72,6 @@ class Family extends Model
         });
 
         static::updated(function ($model) {
-            $model->update_by = auth()->id();
-
             History::create([
                 'family_id' => $model->id,
                 'changes' => json_encode($model->getDirty()),

@@ -30,7 +30,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/tree/{type}', [FamilyController::class, 'index'])->name('tree');
     Route::get('/contact', function () { return Inertia::render('Contact'); })->name('contact');
-    Route::get('/chat', function () { return Inertia::render('Chat'); })->name('chat');
+    Route::get('/message', function () { return Inertia::render('Message'); })->name('message');
     Route::get('/test', function () { return Inertia::render('Test'); })->name('test');
 
     Route::get('/images/{filename}', [ImageController::class, 'getImage'])->name('image.get');

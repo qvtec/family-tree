@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\FamilyTypesController;
 use App\Http\Controllers\Api\ImageUploadController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\HistoryController;
+use App\Http\Controllers\Api\MessageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -45,6 +46,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user-family-type', [FamilyTypesController::class, 'userFamilyTypes'])->name('type.user');
 
     Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
+
+    Route::get('/message', [MessageController::class, 'index'])->name('message.index');
+    Route::post('/message', [MessageController::class, 'send'])->name('message.send');
 
     Route::middleware('admin')->prefix('admin')->name('admin.')->group(function() {
         Route::prefix('tree')->group(function() {
