@@ -52,6 +52,7 @@ export interface FamilyChart {
     id: string
     rels: FamilyChartRels
     data: FamilyChartData
+    main: boolean
 }
 
 export interface FamilyChartRels {

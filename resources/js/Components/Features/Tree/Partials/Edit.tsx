@@ -86,7 +86,10 @@ export default function DetailEditPage({ id, data, onHideEdit }: Props) {
                 contents: editorText,
             }
             await api(route('admin.tree.update', id), { method: 'PUT', body })
-            onHideEdit()
+            // onHideEdit()
+            const currentUrl = new URL(window.location.href)
+            currentUrl.searchParams.set('id', id.toString())
+            window.location.href = currentUrl.toString()
         }
         postData()
     }
@@ -157,31 +160,29 @@ export default function DetailEditPage({ id, data, onHideEdit }: Props) {
                     />
                 </dd>
             </dl>
-            <dl className="flex items-center space-x-6">
-                <div>
-                    <dd className="mb-4 font-light text-gray-500 sm:mb-5">
-                        <Label htmlFor="birth">birth</Label>
-                        <Input
-                            type="date"
-                            name="birth"
-                            value={editForm?.birth ?? ''}
-                            className="mt-1 block w-full"
-                            onChange={handleInputChange}
-                        />
-                    </dd>
-                </div>
-                <div>
-                    <dd className="mb-4 font-light text-gray-500 sm:mb-5">
-                        <Label htmlFor="death">death</Label>
-                        <Input
-                            type="date"
-                            name="death"
-                            value={editForm?.death ?? ''}
-                            className="mt-1 block w-full"
-                            onChange={handleInputChange}
-                        />
-                    </dd>
-                </div>
+            <dl>
+                <dd className="mb-4 font-light text-gray-500 sm:mb-5">
+                    <Label htmlFor="birth">birth</Label>
+                    <Input
+                        type="date"
+                        name="birth"
+                        value={editForm?.birth ?? ''}
+                        className="mt-1 block w-full"
+                        onChange={handleInputChange}
+                    />
+                </dd>
+            </dl>
+            <dl>
+                <dd className="mb-4 font-light text-gray-500 sm:mb-5">
+                    <Label htmlFor="death">death</Label>
+                    <Input
+                        type="date"
+                        name="death"
+                        value={editForm?.death ?? ''}
+                        className="mt-1 block w-full"
+                        onChange={handleInputChange}
+                    />
+                </dd>
             </dl>
             <dl className="flex items-center space-x-6">
                 <dd className="mb-4 font-light text-gray-500 sm:mb-5">

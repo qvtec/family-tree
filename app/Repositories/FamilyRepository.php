@@ -50,6 +50,15 @@ class FamilyRepository
             $p->pids = [$res['id']];
             $p->save();
         }
+        if (isset($data['children'])) {
+            $p = Family::findOrFail($data['children']);
+            if ($data['gender'] == 'M') {
+                $p->fid = $res['id'];
+            } elseif ($data['gender'] == 'F') {
+                $p->mid = $res['id'];
+            }
+            $p->save();
+        }
         return $res;
     }
 

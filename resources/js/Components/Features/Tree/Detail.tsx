@@ -31,19 +31,20 @@ export default function TreeDetailComponents({ cardEditProps, type }: Props) {
                 }
             } else {
                 console.log('Add')
-                const { mid, fid, pids } = cardEditProps.rel_datum
+                const { mid, fid, pids, children } = cardEditProps.rel_datum
                     ? getRels(cardEditProps.rel_datum)
-                    : { mid: null, fid: null, pids: [] }
+                    : { mid: null, fid: null, pids: [], children: null }
 
                 const res = await post<Family>(
                     `/api/tree/${type}`,
                     {
                         name: '未設定',
                         types: [type],
+                        gender: cardEditProps.datum.data.gender,
                         fid: fid,
                         mid: mid,
                         pids: pids,
-                        gender: cardEditProps.datum.data.gender,
+                        children: children,
                     },
                     { isShow: false },
                 )
@@ -61,6 +62,7 @@ export default function TreeDetailComponents({ cardEditProps, type }: Props) {
             let mid = null
             let fid = null
             let pids: number[] = []
+            let children = null
             switch (cardEditProps.rel_type) {
                 case 'son':
                     mid = data.id
@@ -73,10 +75,14 @@ export default function TreeDetailComponents({ cardEditProps, type }: Props) {
                 case 'spouses':
                     pids = [Number(data.id)]
                     break
+                case 'mother':
+                case 'father':
+                    children = data.id
+                    break
                 default:
                     break
             }
-            return { mid, fid, pids }
+            return { mid, fid, pids, children }
         }
 
         fetchData()

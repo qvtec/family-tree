@@ -19,10 +19,11 @@ export default function DetailShowPage({ id, type, data, onShowEdit }: Props) {
     }
 
     async function onClickDelete() {
-        console.log(`/api/tree/${type}/${id}`)
         if (confirm('本当に削除しますか？')) {
             await remove(`/api/tree/${type}/${id}`)
-            window.location.reload()
+            const currentUrl = new URL(window.location.href)
+            currentUrl.searchParams.delete('id')
+            window.location.href = currentUrl.toString()
         }
     }
 

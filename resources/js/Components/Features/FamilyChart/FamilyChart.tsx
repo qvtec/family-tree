@@ -33,6 +33,13 @@ export interface CardEditProps {
     // postSubmit: any
 }
 
+interface ViewProps {
+    initial: boolean
+    scale?: number
+    transition_time?: number
+    tree_position?: string
+}
+
 export default function FamilyChartComponent(props: Props) {
     const cont = useRef<HTMLDivElement>(null)
     const [showEdit, setShowEdit] = useState(false)
@@ -56,7 +63,7 @@ export default function FamilyChartComponent(props: Props) {
 
         switch (treeType) {
             case 'wide':
-                cardDim = { w: 220, h: 70, text_x: 75, text_y: 15, img_w: 60, img_h: 60, img_x: 5, img_y: 5 }
+                cardDim = { w: 220, h: 70, text_x: 65, text_y: 15, img_w: 60, img_h: 60, img_x: 5, img_y: 5 }
                 separation = { node: 250, level: 150 }
                 editIcon = DetailIcon({ cardDim, x: cardDim.w - 52, y: cardDim.h - 24 }).template
                 addIcon = PlusIcon({ cardDim, x: cardDim.w - 26, y: cardDim.h - 20 }).template
@@ -80,6 +87,7 @@ export default function FamilyChartComponent(props: Props) {
             data: props.data,
             node_separation: separation.node,
             level_separation: separation.level,
+            main_id: props.id,
         })
         const view = f3.d3AnimationView({
             store,
@@ -106,9 +114,12 @@ export default function FamilyChartComponent(props: Props) {
         })
 
         view.setCard(Card)
-        store.setOnUpdate((props: any) => {
-            if (props.initial) return view.update({ transition_time: 0 })
-            return view.update({ ...props, tree_position: 'main_to_middle', transition_time: 1000 } || {})
+        store.setOnUpdate((viewProps: ViewProps) => {
+            if (viewProps.initial) {
+                if (props.id) return view.update({ transition_time: 0, tree_position: 'main_to_middle' })
+                return view.update({ transition_time: 0 })
+            }
+            return view.update({ ...viewProps, tree_position: 'main_to_middle', transition_time: 1000 } || {})
         })
         store.update.tree({ initial: true })
 
@@ -116,6 +127,7 @@ export default function FamilyChartComponent(props: Props) {
             if (props.datum.to_add) {
                 console.log('新規登録...')
             } else {
+                console.log('更新', props)
                 setSelected(props)
                 setShowEdit(true)
             }
